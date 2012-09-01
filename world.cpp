@@ -125,6 +125,23 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
             break;
         case sf::Keyboard::R:
             player[0].setPosition(10.0, 10.0);
+        case sf::Keyboard::T:
+            player[1].processInput("up", keyPressed);
+            break;
+        case sf::Keyboard::Y:
+            player[1].processInput("down", keyPressed);
+            break;
+        case sf::Keyboard::U:
+            player[1].processInput("left", keyPressed);
+            break;
+        case sf::Keyboard::I:
+            player[1].processInput("right", keyPressed);
+            break;
+        case sf::Keyboard::V:
+            player[1].processInput("jump", keyPressed);
+            break;
+        case sf::Keyboard::Z:
+            player[1].processInput("item", keyPressed);
             break;
         default:
             break;
