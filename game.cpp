@@ -14,6 +14,7 @@ Game::Game()
         views[i].setSize(RES_X/2, RES_Y);
         views[i].setViewport(sf::FloatRect(i*0.5, 0, 0.5, 1));
     }
+    window.setVerticalSyncEnabled(true);
     state = GAME;
     level = 0;
     newLevel();
