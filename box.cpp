@@ -2,6 +2,8 @@
 #include "player.hpp"
 #include "item.hpp"
 
+Box::Box(){}
+
 Box::Box(sf::Vector2f origin, sf::Vector2f size){
     box.setPoint(0, sf::Vector2f(-size.x/2.0, -size.y/2.0));
     box.setPoint(1, sf::Vector2f(size.x/2.0, -size.y/2.0));

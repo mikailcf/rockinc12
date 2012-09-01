@@ -1,41 +1,49 @@
-#include <SFML/OpenGL.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
-
-#include "game.hpp"
 
 #if defined(__APPLE__) || defined(MACOSX)
 #include "ResourcePath.hpp"
 #endif
 
-using namespace std;
-using namespace sf;
+#include "defs.hpp"
+#include "game.hpp"
 
 Game::Game()
 {
-    window.create(VideoMode(RES_X, RES_Y), TITLE);
+    window.create(sf::VideoMode(RES_X, RES_Y), TITLE);
     for (int i = 0; i < 2; i++) {
         views[i].setCenter(400, 300);
         views[i].setSize(RES_X/2, RES_Y);
-        views[i].setViewport(FloatRect(i*0.5, 0, 0.5, 1));
+        views[i].setViewport(sf::FloatRect(i*0.5, 0, 0.5, 1));
     }
-    player = new Player(RES("sheet.png"));
     bg_tex.loadFromFile(RES("cute_image.jpg"));
     bg.setTexture(bg_tex);
+    state = GAME;
+    level = 0;
+    newLevel();
 }
 
 void Game::processEvents()
 {
-    Event event;
+    sf::Event event;
     while (window.pollEvent(event)) {
-	    // Close window : exit
-	    if (event.type == Event::Closed)
-		    window.close();
-        
-	    // Escape pressed : exit
-	    if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-		    window.close();
+	    switch (event.type) {
+	        case sf::Event::Closed:
+    		    window.close();
+                break;
+	        case sf::Event::KeyPressed:
+	            switch (event.key.code) {
+	                case sf::Keyboard::Escape:
+            		    window.close();
+            		    break;
+	                case sf::Keyboard::Space:
+                        newLevel();
+	                    break;
+	                default:
+	                    break;
+        		}
+        		break;
+            default:
+                break;
+        }
     }
 }
 
@@ -47,7 +55,6 @@ void Game::draw()
         world.Draw(window, i);
     }
     window.draw(bg);
-    player->draw2(&window);
     window.display();
 }
 
@@ -62,5 +69,13 @@ void Game::run()
         processEvents();
         draw();
     }
+}
+
+void Game::newLevel()
+{
+    level++;
+    string s("level0.dat");
+    s[5] = '0' + level;
+    world.Load(RES(s));
 }
 

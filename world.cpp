@@ -18,17 +18,17 @@ World::World()
 {
 }
 
-void World::Load(char *filename)
+void World::Load(string filename)
 {
-    FILE *level_file = fopen(filename, "r");
+    FILE *level_file = fopen(filename.c_str(), "r");
     if (level_file == NULL)
         exit(EXIT_FAILURE);
-    comment(level_file);
+//    comment(level_file);
 //    fscanf(level_file, "%d %d", &n_blocks, &n_hidden_blocks);
     fclose(level_file);
 }
 
-void World::Draw(RenderWindow &window, int playerN)
+void World::Draw(sf::RenderWindow &window, int playerN)
 {
 
 }

@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <string>
+#include <cstring>
 #include <vector>
 
 #define PULSE_TIME 1.0
@@ -56,7 +57,6 @@ enum PLAYER_STATE{
 };
 
 using namespace std;
-using namespace sf;
 
 #endif
 

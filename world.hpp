@@ -14,8 +14,8 @@ private:
     vector<Block> blocks;
 public:
     World();
-    void Load(char *);
-    void Draw(RenderWindow&, int);
+    void Load(string);
+    void Draw(sf::RenderWindow&, int);
 };
 
 #endif
