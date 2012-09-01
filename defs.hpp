@@ -1,3 +1,17 @@
+
+#ifndef DEFS_HPP
+#define DEFS_HPP
+
+#include <SFML/OpenGL.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Network.hpp>
+
+#include <cstdlib>
+#include <cstdio>
+#include <string>
+#include <vector>
+
 #define PULSE_TIME 1.0
 #define TURN_TIME 0.18
 #define MAX_SPD 0.2
@@ -40,3 +54,9 @@ enum PLAYER_STATE{
     WALK,
     CLIMB,
 };
+
+using namespace std;
+using namespace sf;
+
+#endif
+

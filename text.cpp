@@ -1,7 +1,7 @@
 #include "text.hpp"
 #include "defs.hpp"
 
-Text::Text(std::string font_file, std::string shadow_font_file, sf::Vector2f *l, int size){
+FormattedText::FormattedText(std::string font_file, std::string shadow_font_file, sf::Vector2f *l, int size){
     font.loadFromFile(font_file);
     shadow_font.loadFromFile(shadow_font_file);
 
@@ -21,36 +21,36 @@ Text::Text(std::string font_file, std::string shadow_font_file, sf::Vector2f *l,
     selected = false;
 }
 
-void Text::setString(std::string string){
+void FormattedText::setString(std::string string){
     text.setString(string);
     selected_text.setString(string);
     shadow.setString(string);
 }
 
-void Text::select(){
+void FormattedText::select(){
     selected = true;
 }
 
-void Text::deselect(){
+void FormattedText::deselect(){
     selected = false;
 }
 
-void Text::setPosition(sf::Vector2f pos){
+void FormattedText::setPosition(sf::Vector2f pos){
     text.setPosition(pos);
     selected_text.setPosition(pos);
     shadow.setPosition(pos);
 }
 
-void Text::draw(sf::RenderWindow *window){
+void FormattedText::draw(sf::RenderWindow *window){
     if(selected) window->draw(selected_text);
     else window->draw(text);
 }
 
-void Text::castShadow(sf::RenderWindow *window){
+void FormattedText::castShadow(sf::RenderWindow *window){
     window->draw(shadow);
 }
 
-void Text::makeShadow(){
+void FormattedText::makeShadow(){
     float projection_left, projection_top, projection_right, projection_bottom;
     float left, top, right, bottom;
 
@@ -77,3 +77,4 @@ void Text::makeShadow(){
     shadow.scale((float) (projection_right - projection_left)/shadow.getGlobalBounds().width, (float) (projection_bottom - projection_top)/shadow.getGlobalBounds().height);
     shadow.move(projection_left - shadow.getGlobalBounds().left, projection_top - shadow.getGlobalBounds().top);
 }
+

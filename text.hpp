@@ -3,7 +3,7 @@
 #ifndef TEXT_HPP
 #define TEXT_HPP
 
-class Text{
+class FormattedText{
     sf::Text text;
     sf::Text selected_text;
     sf::Text shadow;
@@ -15,7 +15,7 @@ class Text{
     bool selected;
 
 public:
-    Text(std::string font_file, std::string shadow_font_file, sf::Vector2f *l, int size);
+    FormattedText(std::string font_file, std::string shadow_font_file, sf::Vector2f *l, int size);
 
     void setString(std::string string);
 

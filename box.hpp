@@ -1,5 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include "Player.hpp"
+#include "player.hpp"
 
 #ifndef BOX_HPP
 #define BOX_HPP

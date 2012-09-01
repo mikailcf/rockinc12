@@ -1,19 +1,10 @@
 
-#include <SFML/OpenGL.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
-#include <vector>
-
 #include "player.hpp"
 #include "block.hpp"
 #include "item.hpp"
 
 #ifndef WORLD_HPP
 #define WORLD_HPP
-
-using namespace std;
-using namespace sf;
 
 class World
 {
@@ -23,7 +14,7 @@ private:
     vector<Block> blocks;
 public:
     World();
-    void Load(string);
+    void Load(char *);
     void Draw(RenderWindow&, int);
 };
 
