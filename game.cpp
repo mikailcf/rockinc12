@@ -34,10 +34,10 @@ void Game::processEvents()
 	                case sf::Keyboard::Escape:
             		    window.close();
             		    break;
-	                case sf::Keyboard::Space:
+	                case sf::Keyboard::Tab:
                         newLevel();
 	                    break;
-	                case sf::Keyboard::A:
+	                case sf::Keyboard::Z:
                         for (int i = 0; i < 2; i++) {
                             sf::Vector2f center = views[i].getCenter();
                             views[i].setCenter(center.x - 1 + 2*i, center.y);
