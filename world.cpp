@@ -79,7 +79,7 @@ void World::draw(sf::RenderWindow &window, int delta_t)
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
             
     }
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 2; i++) {
         player[i].animate(delta_t);
         player[i].draw(&window);    
     }
@@ -107,5 +107,11 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
             break;
         default:
             break;
+    }
+}
+
+void World::updateScene(int delta_t){
+    for(int i = 0; i < 2; i++) {
+        player[i].accel(delta_t, GRAVITY);
     }
 }

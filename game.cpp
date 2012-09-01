@@ -57,6 +57,8 @@ void Game::draw()
     delta_t = current_t - last_t;
     last_t = current_t;
 
+    world.updateScene(delta_t);
+
     window.clear();
     window.setView(window.getDefaultView());
     world.drawBackground(window, delta_t);

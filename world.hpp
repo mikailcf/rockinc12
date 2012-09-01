@@ -25,6 +25,7 @@ public:
     void drawBackground(sf::RenderWindow&, int);
     void draw(sf::RenderWindow&, int);
     void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
+    void updateScene(int delta_t);
 };
 
 #endif

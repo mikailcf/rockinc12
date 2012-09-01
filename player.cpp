@@ -10,6 +10,7 @@ Player::Player(float x, float y, std::string filename){
     tex.loadFromFile(filename);
     animation_t = jump_t = 0;
     state = STAND;
+    move_state = 0;
     sprite.move(x, y);
 }
 
@@ -112,8 +113,8 @@ void Player::turn(int move){
     }
 }
 
-void Player::accel(int move, int delta_t, float gravity){
-    spd.x += move * delta_t * (MAX_SPD/(ACCEL_TIME * 1000.0));
+void Player::accel(int delta_t, float gravity){
+    spd.x += move_state * delta_t * (MAX_SPD/(ACCEL_TIME * 1001.0));
     if(spd.x > MAX_SPD) spd.x = MAX_SPD;
     if(spd.x < -MAX_SPD) spd.x = -MAX_SPD;
     if(stuck.y != 1) spd.y += gravity * delta_t;

@@ -38,7 +38,7 @@ public:
     void pulse(int elapsed_t);
     void animate(int elapsed_t);
     void turn(int move);
-    void accel(int move, int delta_t, float gravity);
+    void accel(int delta_t, float gravity);
     void jump(int delta_t);
     
     void processInput(const string key, bool keyPressed);
