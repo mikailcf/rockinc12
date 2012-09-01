@@ -64,7 +64,7 @@ void Game::draw()
     world.drawBackground(window, delta_t);
     for (int i = 0; i < 2; i++) {
         window.setView(views[i]);
-        world.draw(window, i);
+        world.draw(window, delta_t);
     }
     window.display();
 }
