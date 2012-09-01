@@ -1,13 +1,9 @@
 #include <math.h>
 #include "player.hpp"
 
-#if defined(__APPLE__) || defined(MACOSX)
-#include "ResourcePath.hpp"
-#endif
-
 Player::Player(){};
 
-Player::Player(char *filename){
+Player::Player(std::string filename){
     tex.loadFromFile(filename);
     sprite.setTexture(tex);
 }

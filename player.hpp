@@ -22,7 +22,7 @@ public:
     PLAYER_STATE state;
 
     Player();
-    Player(char *filename);
+    Player(std::string filename);
     Player(float x, float y);
 
     void draw(sf::RenderWindow *window);

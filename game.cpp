@@ -5,6 +5,10 @@
 
 #include "game.hpp"
 
+#if defined(__APPLE__) || defined(MACOSX)
+#include "ResourcePath.hpp"
+#endif
+
 using namespace std;
 using namespace sf;
 
@@ -16,6 +20,9 @@ Game::Game()
         views[i].setSize(RES_X/2, RES_Y);
         views[i].setViewport(FloatRect(i*0.5, 0, 0.5, 1));
     }
+    player = new Player(RES("sheet.png"));
+    bg_tex.loadFromFile(RES("cute_image.jpg"));
+    bg.setTexture(bg_tex);
 }
 
 void Game::processEvents()
@@ -39,7 +46,8 @@ void Game::draw()
         window.setView(views[i]);
         world.Draw(window, i);
     }
-    player.draw2(&window);
+    window.draw(bg);
+    player->draw2(&window);
     window.display();
 }
 

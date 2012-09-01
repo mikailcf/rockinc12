@@ -6,10 +6,10 @@
 
 #include "item.hpp"
 
-using namespace std;
-using namespace sf;
+// using namespace std;
+// using namespace sf;
 
-Item::Item()
-{
-}
+// Item::Item()
+// {
+// }
 

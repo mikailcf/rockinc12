@@ -61,3 +61,9 @@ int Box::collide(Player *player){
 
     return 1;
 }
+
+void Box::move(float offsetX, float offsetY){
+    // if(attached != NULL) attached->move(offsetX, offsetY + 0.1);
+    box.move(offsetX, offsetY);
+    // this->updateCenter();
+}

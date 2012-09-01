@@ -19,7 +19,9 @@ private:
     RenderWindow window;
     View views[2];
     World world;
-    Player player(RES("sheet.png"));
+    Player *player;
+    sf::Texture bg_tex;
+    sf::Sprite bg;
 public:
     Game();
     void processEvents();
