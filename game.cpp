@@ -37,12 +37,6 @@ void Game::processEvents()
 	                case sf::Keyboard::Space:
                         newLevel();
 	                    break;
-	                case sf::Keyboard::A:
-                        for (int i = 0; i < 2; i++) {
-                            sf::Vector2f center = views[i].getCenter();
-                            views[i].setCenter(center.x - 1 + 2*i, center.y);
-                        }
-                        break;
 	                default:
                         world.processInput(event.key.code, true);
 	                    break;
