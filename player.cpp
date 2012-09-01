@@ -1,7 +1,7 @@
 #include <math.h>
 #include "player.hpp"
 
-Player::Player(){};
+Player::Player(){item = NULL};
 
 Player::Player(std::string filename){
     tex.loadFromFile(filename);
@@ -9,6 +9,8 @@ Player::Player(std::string filename){
 }
 
 Player::Player(float x, float y){
+    item = NULL;
+
     pos.x = 0;
     pos.y = 15;
 

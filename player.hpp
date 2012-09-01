@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "defs.hpp"
+#include "item.hpp"
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -20,6 +21,8 @@ public:
     int jumping;
     float left, top, width, height;
     PLAYER_STATE state;
+
+    Item * item;
 
     Player();
     Player(std::string filename);
