@@ -1,10 +1,13 @@
 #include <math.h>
 #include "player.hpp"
 
-Player::Player(){item = NULL;};
+Player::Player(){
+    item = NULL;
+    move_state = 0;
+};
 
 Player::Player(float x, float y, std::string filename){
-    tex.loadFromFile(RES("sheet.png"));
+    tex.loadFromFile(filename);
     animation_t = jump_t = 0;
     state = STAND;
     sprite.move(x, y);
@@ -12,6 +15,7 @@ Player::Player(float x, float y, std::string filename){
 
 Player::Player(float x, float y){
     item = NULL;
+    move_state = 0;
 
     pos.x = 0;
     pos.y = 15;
@@ -131,5 +135,27 @@ void Player::jump(int delta_t){
         spd.y += -JUMP_SPD/1.9;
         jumping = 0;
         return;
+    }
+}
+
+void Player::processInput(const string key, bool keyPressed) {
+    if (key == "up") {
+    }
+    else if (key == "down") {
+    }
+    else if (key == "left") {
+        move_state += (keyPressed == true)? -1 : 1;
+    }
+    else if (key == "right") {
+        move_state += (keyPressed == true)? 1 : -1;
+    }
+    else if (key == "jump") {
+        //começo do pulo
+        if (keyPressed && can_jump) jump(-1);
+        //para de subir, smooth
+        else if (!keyPressed && spd.y < -0.15) spd.y = -0.15;
+    }
+    else if (key == "item")
+    {
     }
 }

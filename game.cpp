@@ -9,6 +9,7 @@
 Game::Game()
 {
     window.create(sf::VideoMode(RES_X, RES_Y), TITLE);
+    window.setKeyRepeatEnabled(false);
     for (int i = 0; i < 2; i++) {
         views[i].setCenter((RES_X*i)/2 + RES_X/4, RES_Y/2);
         views[i].setSize(RES_X/2, RES_Y);
@@ -37,9 +38,13 @@ void Game::processEvents()
                         newLevel();
 	                    break;
 	                default:
+                        world.processInput(event.key.code, true);
 	                    break;
         		}
-        		break;
+                break;
+            case sf::Event::KeyReleased:
+                world.processInput(event.key.code, false);
+                break;
             default:
                 break;
         }
@@ -57,7 +62,7 @@ void Game::draw()
     world.DrawBackground(window, delta_t);
     for (int i = 0; i < 2; i++) {
         window.setView(views[i]);
-        world.Draw(window, delta_t);
+        world.draw(window, i);
     }
     window.display();
 }
@@ -80,6 +85,6 @@ void Game::newLevel()
     level++;
     string s("level0.dat");
     s[5] = '0' + level;
-    world.Load(RES(s));
+    world.load(RES(s));
 }
 

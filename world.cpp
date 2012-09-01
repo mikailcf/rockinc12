@@ -50,7 +50,7 @@ void World::LoadPlayers(FILE* file)
     }
 }
 
-void World::Load(string filename)
+void World::load(string filename)
 {
     FILE *level_file = fopen(filename.c_str(), "r");
     if (level_file == NULL)
@@ -63,7 +63,7 @@ void World::Load(string filename)
     fclose(level_file);
 }
 
-void World::DrawBackground(sf::RenderWindow &window, int delta_t)
+void World::drawBackground(sf::RenderWindow &window, int delta_t)
 {
     sf::Texture bg_tex;
     bg_tex.loadFromImage(bg_img);
@@ -71,7 +71,7 @@ void World::DrawBackground(sf::RenderWindow &window, int delta_t)
     window.draw(bg_sprite);
 }
 
-void World::Draw(sf::RenderWindow &window, int delta_t)
+void World::draw(sf::RenderWindow &window, int delta_t)
 {
     for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
             
@@ -85,3 +85,27 @@ void World::Draw(sf::RenderWindow &window, int delta_t)
     }
 }
 
+void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
+    switch (keyCode) {
+        case sf::Keyboard::W:
+            player[0].processInput("up", keyPressed);
+            break;
+        case sf::Keyboard::S:
+            player[0].processInput("down", keyPressed);
+            break;
+        case sf::Keyboard::A:
+            player[0].processInput("left", keyPressed);
+            break;
+        case sf::Keyboard::D:
+            player[0].processInput("right", keyPressed);
+            break;
+        case sf::Keyboard::K:
+            player[0].processInput("jump", keyPressed);
+            break;
+        case sf::Keyboard::L:
+            player[0].processInput("item", keyPressed);
+            break;
+        default:
+            break;
+    }
+}

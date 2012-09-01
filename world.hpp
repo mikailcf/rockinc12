@@ -18,12 +18,13 @@ private:
     sf::Image bg_img;
 public:
     World();
-    void Load(string);
-    void LoadPlayers(FILE*);
-    void LoadBlocks(FILE*);
-    void LoadItems(FILE*);
-    void DrawBackground(sf::RenderWindow&, int);
-    void Draw(sf::RenderWindow&, int);
+    void load(string);
+    void loadPlayers(FILE*);
+    void loadBlocks(FILE*);
+    void loadItems(FILE*);
+    void drawBackground(sf::RenderWindow&, int);
+    void draw(sf::RenderWindow&, int);
+    void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
 };
 
 #endif

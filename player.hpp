@@ -8,6 +8,7 @@
 class Player{
     sf::ConvexShape triangle;
     int animation_t, jump_t;
+    int move_state;
     float angle, target_angle;
     float turn_spd;
     sf::Texture tex;
@@ -39,6 +40,7 @@ public:
     void turn(int move);
     void accel(int move, int delta_t, float gravity);
     void jump(int delta_t);
+    
+    void processInput(const string key, bool keyPressed);
 };
-
 #endif
