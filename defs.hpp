@@ -37,6 +37,7 @@
 #define RES_X 960
 #define RES_Y 640
 
+#define MAX_NAME 30
 #define TITLE "Game"
 
 #if defined(__APPLE__) || defined(MACOSX)

@@ -11,7 +11,7 @@ Game::Game()
     window.create(sf::VideoMode(RES_X, RES_Y), TITLE);
     window.setKeyRepeatEnabled(false);
     for (int i = 0; i < 2; i++) {
-        views[i].setCenter((RES_X*i)/2 + RES_X/4, RES_Y/2);
+        views[i].setCenter(RES_X/2 + i*100, RES_Y/2);
         views[i].setSize(RES_X/2, RES_Y);
         views[i].setViewport(sf::FloatRect(i*0.5, 0, 0.5, 1));
     }
@@ -37,6 +37,12 @@ void Game::processEvents()
 	                case sf::Keyboard::Space:
                         newLevel();
 	                    break;
+	                case sf::Keyboard::A:
+                        for (int i = 0; i < 2; i++) {
+                            sf::Vector2f center = views[i].getCenter();
+                            views[i].setCenter(center.x - 1 + 2*i, center.y);
+                        }
+                        break;
 	                default:
                         world.processInput(event.key.code, true);
 	                    break;
@@ -59,10 +65,10 @@ void Game::draw()
 
     window.clear();
     window.setView(window.getDefaultView());
-    world.drawBackground(window, delta_t);
     for (int i = 0; i < 2; i++) {
         window.setView(views[i]);
-        world.draw(window, i);
+        world.drawBackground(window, delta_t);
+        world.draw(window, delta_t);
     }
     window.display();
 }

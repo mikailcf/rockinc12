@@ -16,7 +16,25 @@ void comment(FILE *file){
 
 World::World()
 {
-    bg_img.loadFromFile(RES("cute_image.jpg"));
+}
+
+void World::loadBackground(FILE* file)
+{
+    char filename[MAX_NAME];
+    fscanf(file, "%s\n", filename);
+    bg_img.loadFromFile(RES(string(filename)));
+}
+
+void World::loadSoundtrack(FILE* file)
+{
+    char filename[MAX_NAME];
+    fscanf(file, "%s\n", filename);
+    if (!sound.first.loadFromFile(RES(string(filename))))
+        exit(EXIT_FAILURE);
+    sound.second.setBuffer(sound.first); 
+    sound.second.setLoop(true);
+    sound.second.setVolume(1);
+    sound.second.play();
 }
 
 void World::loadBlocks(FILE* file)
@@ -55,7 +73,9 @@ void World::load(string filename)
     FILE *level_file = fopen(filename.c_str(), "r");
     if (level_file == NULL)
         exit(EXIT_FAILURE);
-    
+
+    loadBackground(level_file);
+    loadSoundtrack(level_file);
     loadPlayers(level_file);
     loadItems(level_file);
     loadBlocks(level_file);
@@ -79,7 +99,7 @@ void World::draw(sf::RenderWindow &window, int delta_t)
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
             
     }
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 2; i++) {
         player[i].animate(delta_t);
         player[i].draw(&window);    
     }
