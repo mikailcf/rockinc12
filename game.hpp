@@ -5,6 +5,7 @@
 #include <SFML/Network.hpp>
 
 #include "world.hpp"
+#include "player.hpp"
 
 #ifndef GAME_HPP
 #define GAME_HPP
@@ -18,6 +19,7 @@ private:
     RenderWindow window;
     View views[2];
     World world;
+    Player player(RES("sheet.png"));
 public:
     Game();
     void processEvents();

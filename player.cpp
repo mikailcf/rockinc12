@@ -1,8 +1,16 @@
 #include <math.h>
-
 #include "player.hpp"
 
+#if defined(__APPLE__) || defined(MACOSX)
+#include "ResourcePath.hpp"
+#endif
+
 Player::Player(){};
+
+Player::Player(char *filename){
+    tex.loadFromFile(filename);
+    sprite.setTexture(tex);
+}
 
 Player::Player(float x, float y){
     pos.x = 0;
@@ -35,6 +43,10 @@ Player::Player(float x, float y){
 
 void Player::draw(sf::RenderWindow *window){
     window->draw(triangle);
+}
+
+void Player::draw2(sf::RenderWindow *window){
+    window->draw(sprite);
 }
 
 void Player::move(int delta_t){

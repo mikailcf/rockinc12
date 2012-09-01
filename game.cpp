@@ -1,4 +1,3 @@
-
 #include <SFML/OpenGL.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -40,6 +39,7 @@ void Game::draw()
         window.setView(views[i]);
         world.Draw(window, i);
     }
+    player.draw2(&window);
     window.display();
 }
 

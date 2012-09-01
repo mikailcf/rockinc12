@@ -1,6 +1,4 @@
 #include <SFML/OpenGL.hpp>
-
-#include "defs.hpp"
 #include "block.hpp"
 
 Block::Block(sf::Vector2f origin, sf::Vector2f size, sf::Color color, sf::View *v, sf::Vector2f *l, bool anim){

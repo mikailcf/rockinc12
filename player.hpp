@@ -9,6 +9,8 @@ class Player{
     int animation_t, jump_t;
     float angle, target_angle;
     float turn_spd;
+    sf::Texture tex;
+    sf::Sprite sprite;
 
 public:
     sf::Vector2f pos;
@@ -20,9 +22,11 @@ public:
     PLAYER_STATE state;
 
     Player();
+    Player(char *filename);
     Player(float x, float y);
 
     void draw(sf::RenderWindow *window);
+    void draw2(sf::RenderWindow *window);
     void move(int delta_t);
     void move(float offsetX, float offsetY);
     void setPosition(float x, float y);
