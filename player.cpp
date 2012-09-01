@@ -52,23 +52,27 @@ void Player::draw(sf::RenderWindow *window){
 }
 
 void Player::move(int delta_t){
+
+    if (move_state == 0) spd.x = 0;
+
     if((spd.x > 0.0 && stuck.x != 1) || (spd.x < 0.0 && stuck.x != -1)){
-        triangle.move(spd.x * delta_t, 0);
+        sprite.move(spd.x * delta_t, 0);
         pos.x += spd.x * delta_t;
         left += spd.x * delta_t;
 
         stuck.x = 0;
     }
-
+/*
     if((spd.y > 0.0 && stuck.y != 1) || (spd.y < 0.0 && stuck.y != -1)){
-        triangle.move(0, spd.y * delta_t);
+        sprite.move(0, spd.y * delta_t);
         pos.y += spd.y * delta_t;
         top += spd.y * delta_t;
     }
+    */
 }
 
 void Player::move(float offsetX, float offsetY){
-    triangle.move(offsetX, offsetY);
+    sprite.move(offsetX, offsetY);
     pos.x += offsetX;
     pos.y += offsetY;
     left += offsetX;
@@ -78,7 +82,7 @@ void Player::move(float offsetX, float offsetY){
 void Player::setPosition(float x, float y){
     left += x - pos.x;
     top += y - pos.y;
-    triangle.move(x - pos.x, y - pos.y);
+    sprite.move(x - pos.x, y - pos.y);
     pos.x = x;
     pos.y = y;
 }
