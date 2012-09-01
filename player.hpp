@@ -25,7 +25,7 @@ public:
     Item * item;
 
     Player();
-    Player(std::string filename);
+    Player(float, float, std::string filename);
     Player(float x, float y);
 
     void draw(sf::RenderWindow *window);

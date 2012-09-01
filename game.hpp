@@ -14,10 +14,10 @@ private:
     World world;
     sf::Texture bg_tex;
     sf::Sprite bg;
-    sf::Clock clock;
-    int current_t, delta_t, last_t;
     STATE state;
     int level;
+    sf::Clock clock;
+    int current_t, delta_t, last_t;
 public:
     Game();
     void processEvents();

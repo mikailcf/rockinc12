@@ -10,12 +10,10 @@ Game::Game()
 {
     window.create(sf::VideoMode(RES_X, RES_Y), TITLE);
     for (int i = 0; i < 2; i++) {
-        views[i].setCenter(400, 300);
+        views[i].setCenter((RES_X*i)/2 + RES_X/4, RES_Y/2);
         views[i].setSize(RES_X/2, RES_Y);
         views[i].setViewport(sf::FloatRect(i*0.5, 0, 0.5, 1));
     }
-    bg_tex.loadFromFile(RES("cute_image.jpg"));
-    bg.setTexture(bg_tex);
     state = GAME;
     level = 0;
     newLevel();
@@ -54,13 +52,12 @@ void Game::draw()
     last_t = current_t;
 
     window.clear();
+    window.setView(window.getDefaultView());
+    world.DrawBackground(window, delta_t);
     for (int i = 0; i < 2; i++) {
         window.setView(views[i]);
-        world.Draw(window, i);
+        world.Draw(window, delta_t);
     }
-    window.draw(bg);
-    player->animate(delta_t);
-    player->draw(&window);
     window.display();
 }
 

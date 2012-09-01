@@ -16,6 +16,7 @@ void comment(FILE *file){
 
 World::World()
 {
+    bg_img.loadFromFile(RES("cute_image.jpg"));
 }
 
 void World::LoadBlocks(FILE* file)
@@ -45,7 +46,7 @@ void World::LoadPlayers(FILE* file)
     for (int i = 0; i < 2; i++) {
         float x, y;
         fscanf(file, "%f %f", &x, &y);
-        player[i] = Player(x, y);
+        player[i] = Player(x, y, RES("sheet.png"));
     }
 }
 
@@ -62,20 +63,25 @@ void World::Load(string filename)
     fclose(level_file);
 }
 
-void World::Draw(sf::RenderWindow &window, int playerN)
+void World::DrawBackground(sf::RenderWindow &window, int delta_t)
 {
-//    DrawBackground(window, playerN);
+    sf::Texture bg_tex;
+    bg_tex.loadFromImage(bg_img);
+    bg_sprite.setTexture(bg_tex);
+    window.draw(bg_sprite);
+}
 
+void World::Draw(sf::RenderWindow &window, int delta_t)
+{
     for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
             
     }
-    
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
             
     }
-    
-    for (int i = 0; i < 2; i++) {
-    
+    for (int i = 0; i < 1; i++) {
+        player[i].animate(delta_t);
+        player[i].draw(&window);    
     }
 }
 

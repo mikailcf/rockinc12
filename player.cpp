@@ -3,14 +3,11 @@
 
 Player::Player(){item = NULL;};
 
-Player::Player(std::string filename){
-    tex.loadFromFile(filename);
-    sprite.setTexture(tex);
-
+Player::Player(float x, float y, std::string filename){
+    tex.loadFromFile(RES("sheet.png"));
     animation_t = jump_t = 0;
     state = STAND;
-
-    sprite.move(500.0, 0);
+    sprite.move(x, y);
 }
 
 Player::Player(float x, float y){
@@ -45,6 +42,7 @@ Player::Player(float x, float y){
 }
 
 void Player::draw(sf::RenderWindow *window){
+    sprite.setTexture(tex);
     window->draw(sprite);
 }
 
