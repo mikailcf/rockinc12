@@ -5,19 +5,23 @@
 
 #include "defs.hpp"
 #include "game.hpp"
+#include "box.hpp"
 
 Game::Game()
 {
     window.create(sf::VideoMode(RES_X, RES_Y), TITLE);
     window.setKeyRepeatEnabled(false);
     for (int i = 0; i < 2; i++) {
-        views[i].setCenter(RES_X/2 + i*100, RES_Y/2);
-        views[i].setSize(RES_X/2, RES_Y);
-        views[i].setViewport(sf::FloatRect(i*0.5, 0, 0.5, 1));
+        // views[i].setCenter(RES_X/2, RES_Y/2);
+        // views[i].setCenter(0.0, RES_Y/2);
+        // views[i].setSize(RES_X/2, RES_Y);
+        // views[i].setViewport(sf::FloatRect(i*0.5, 0, 0.5, 1));
     }
     window.setVerticalSyncEnabled(true);
     state = GAME;
     level = 0;
+    last_t = 0;
+
     newLevel();
 }
 

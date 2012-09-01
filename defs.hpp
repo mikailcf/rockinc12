@@ -17,7 +17,8 @@
 #define TURN_TIME 0.18
 #define MAX_SPD 0.2
 #define ACCEL_TIME 0.3
-#define GRAVITY 0.0008
+#define GRAVITY 0.0001
+// #define GRAVITY 0.0008
 #define JUMP_GRAVITY 0.0019
 #define JUMP_SPD 0.42
 #define JUMP_TIME 0.15

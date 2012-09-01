@@ -16,7 +16,8 @@ class Block{
     bool animate;
 
 public:
-    Block(sf::Vector2f origin, sf::Vector2f size, sf::View *v, sf::Vector2f *l, bool anim);
+    Block();
+    Block(sf::Vector2f origin, sf::Vector2f size, bool anim);
 
     void init_animation(float time);
 

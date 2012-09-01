@@ -42,7 +42,7 @@ void World::loadBlocks(FILE* file)
     while (n--) {
         float ox, oy, sx, sy;
         fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
-        blocks.push_back(Block(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy), NULL, NULL, false));
+        blocks.push_back(Block(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy), false));
     }
 }
 
@@ -92,7 +92,7 @@ void World::drawBackground(sf::RenderWindow &window, int delta_t)
 void World::draw(sf::RenderWindow &window, int delta_t)
 {
     for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-            
+        (*it).draw(&window);
     }
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
             
@@ -123,6 +123,9 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
         case sf::Keyboard::I:
             player[0].processInput("item", keyPressed);
             break;
+        case sf::Keyboard::R:
+            player[0].setPosition(10.0, 10.0);
+            break;
         default:
             break;
     }
@@ -134,9 +137,12 @@ void World::unload()
 }
 
 void World::updateScene(int delta_t){
-    for(int i = 0; i < 2; i++) {
+    int col = 0;
         player[i].accel(delta_t, GRAVITY);
         player[i].move(delta_t);
+    }
+    for(vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
+        // col = it->collide(&player[0]);
     }
 }
 

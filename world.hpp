@@ -4,6 +4,8 @@
 #include "block.hpp"
 #include "item.hpp"
 
+#include "box.hpp"
+
 #ifndef WORLD_HPP
 #define WORLD_HPP
 
@@ -17,6 +19,7 @@ private:
 
     sf::Sprite bg_sprite;
     sf::Image bg_img;
+
 public:
     World();
     void load(string);

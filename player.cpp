@@ -12,7 +12,40 @@ Player::Player(float x, float y, std::string filename){
     state = STAND;
     move_state = 0;
     sprite.move(x, y);
-}
+
+    pos.x = x;
+    pos.y = y;
+
+    item = NULL;
+    move_state = 0;
+
+    // pos.x = 0;
+    // pos.y = 15;
+
+    // triangle.setPointCount(3);
+    // triangle.setPoint(0, sf::Vector2f(pos.x, -(45 - pos.y)));
+    // triangle.setPoint(1, sf::Vector2f(pos.x - 25, pos.y));
+    // triangle.setPoint(2, sf::Vector2f(pos.x + 25, pos.y));
+    // triangle.setOutlineColor(sf::Color::White);
+    // triangle.setOutlineThickness(2.0);
+    // triangle.setFillColor(sf::Color(255, 255, 255, 50));
+
+    // triangle.move(x, y);
+    pos.x = x;
+    pos.y = y;
+
+    animation_t = jump_t = 0;
+    angle = target_angle = 0.0;
+    turn_spd = 0.0;
+    spd.x = spd.y = 0.0;
+    stuck.x = stuck.y = 0;
+    can_jump = 0;
+    jumping = 0;
+    left = sprite.getGlobalBounds().left;
+    top = sprite.getGlobalBounds().top;
+    width = 50;
+    height = 50;
+};
 
 Player::Player(float x, float y){
     item = NULL;
@@ -62,13 +95,12 @@ void Player::move(int delta_t){
 
         stuck.x = 0;
     }
-/*
+
     if((spd.y > 0.0 && stuck.y != 1) || (spd.y < 0.0 && stuck.y != -1)){
         sprite.move(0, spd.y * delta_t);
         pos.y += spd.y * delta_t;
         top += spd.y * delta_t;
     }
-    */
 }
 
 void Player::move(float offsetX, float offsetY){
@@ -118,7 +150,7 @@ void Player::turn(int move){
 }
 
 void Player::accel(int delta_t, float gravity){
-    spd.x += move_state * delta_t * (MAX_SPD/(ACCEL_TIME * 1001.0));
+    spd.x += move_state * delta_t * (MAX_SPD/(ACCEL_TIME * 1000.0));
     if(spd.x > MAX_SPD) spd.x = MAX_SPD;
     if(spd.x < -MAX_SPD) spd.x = -MAX_SPD;
     if(stuck.y != 1) spd.y += gravity * delta_t;

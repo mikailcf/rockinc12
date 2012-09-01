@@ -5,6 +5,7 @@
 Box::Box(){}
 
 Box::Box(sf::Vector2f origin, sf::Vector2f size){
+    box.setPointCount(4);
     box.setPoint(0, sf::Vector2f(-size.x/2.0, -size.y/2.0));
     box.setPoint(1, sf::Vector2f(size.x/2.0, -size.y/2.0));
     box.setPoint(2, sf::Vector2f(size.x/2.0, size.y/2.0));

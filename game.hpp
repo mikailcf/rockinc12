@@ -18,6 +18,7 @@ private:
     int level;
     sf::Clock clock;
     int current_t, delta_t, last_t;
+
 public:
     Game();
     void processEvents();
