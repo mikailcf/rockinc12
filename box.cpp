@@ -26,9 +26,9 @@ int Box::collide(Player *player){
     float right_item;
     if (player->item != NULL) {
         top_item    = player->item->top;
-        bottom_item = player->item->top + item->height;
+        bottom_item = player->item->top + player->item->height;
         left_item   = player->item->left;
-        right_item  = player->item->left + item->width;
+        right_item  = player->item->left + player->item->width;
     }
     float max_top;
     float min_bottom;

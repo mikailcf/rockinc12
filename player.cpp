@@ -1,7 +1,7 @@
 #include <math.h>
 #include "player.hpp"
 
-Player::Player(){item = NULL};
+Player::Player(){item = NULL;};
 
 Player::Player(std::string filename){
     tex.loadFromFile(filename);
