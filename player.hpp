@@ -29,17 +29,16 @@ public:
     Player(float x, float y);
 
     void draw(sf::RenderWindow *window);
-    void draw2(sf::RenderWindow *window);
     void move(int delta_t);
     void move(float offsetX, float offsetY);
     void setPosition(float x, float y);
 
     void setScale(float scale);
     void pulse(int elapsed_t);
+    void animate(int elapsed_t);
     void turn(int move);
     void accel(int move, int delta_t, float gravity);
     void jump(int delta_t);
-    void jumpStop();
 };
 
 #endif

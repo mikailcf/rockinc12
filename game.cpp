@@ -49,12 +49,18 @@ void Game::processEvents()
 
 void Game::draw()
 {
+    current_t = clock.getElapsedTime().asMilliseconds();
+    delta_t = current_t - last_t;
+    last_t = current_t;
+
     window.clear();
     for (int i = 0; i < 2; i++) {
         window.setView(views[i]);
         world.Draw(window, i);
     }
     window.draw(bg);
+    player->animate(delta_t);
+    player->draw(&window);
     window.display();
 }
 

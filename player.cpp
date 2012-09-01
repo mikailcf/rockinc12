@@ -6,6 +6,11 @@ Player::Player(){item = NULL;};
 Player::Player(std::string filename){
     tex.loadFromFile(filename);
     sprite.setTexture(tex);
+
+    animation_t = jump_t = 0;
+    state = STAND;
+
+    sprite.move(500.0, 0);
 }
 
 Player::Player(float x, float y){
@@ -40,10 +45,6 @@ Player::Player(float x, float y){
 }
 
 void Player::draw(sf::RenderWindow *window){
-    window->draw(triangle);
-}
-
-void Player::draw2(sf::RenderWindow *window){
     window->draw(sprite);
 }
 
@@ -83,32 +84,15 @@ void Player::setScale(float scale){
     triangle.setScale(scale, scale);
 }
 
-void Player::pulse(int elapsed_t){
-    float scale;
-
+void Player::animate(int elapsed_t){
+    int i;
     animation_t += elapsed_t;
+    animation_t %= 1000;
 
-    if(animation_t > PULSE_TIME * 500) animation_t -= PULSE_TIME * 1000;
+    i = (int) animation_t/125;
+    i %= 8;
 
-    scale = (float) animation_t/(PULSE_TIME * 500);
-    scale = sqrt(fabs(scale));
-    triangle.setFillColor(sf::Color(255, 255, 255, (scale*100) + 40));
-    scale *= 1.0 - MIN_SCALE;
-    scale += MIN_SCALE;
-
-    this->setScale(scale);
-    triangle.setOutlineThickness(BASE_OUTLINE/scale);
-
-    int sign;
-
-    if(turn_spd != 0.0){
-        sign = turn_spd > 0.0 ? 1 : -1;
-
-        if(sign * angle < sign * target_angle){
-            triangle.rotate(turn_spd * elapsed_t/1000.0);
-            angle += turn_spd * elapsed_t/1000.0;
-        }
-    }
+    sprite.setTextureRect(sf::IntRect(i*50, 0, 50, 50));
 }
 
 void Player::turn(int move){
@@ -150,8 +134,4 @@ void Player::jump(int delta_t){
         jumping = 0;
         return;
     }
-}
-
-void Player::jumpStop(){
-
 }
