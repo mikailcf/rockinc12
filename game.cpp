@@ -63,6 +63,8 @@ void Game::draw()
     delta_t = current_t - last_t;
     last_t = current_t;
 
+    world.updateScene(delta_t);
+
     window.clear();
     window.setView(window.getDefaultView());
     for (int i = 0; i < 2; i++) {

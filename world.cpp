@@ -134,3 +134,9 @@ void World::unload()
     sound.stop();
 }
 
+void World::updateScene(int delta_t){
+    for(int i = 0; i < 2; i++) {
+        player[i].accel(delta_t, GRAVITY);
+    }
+}
+

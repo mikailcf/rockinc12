@@ -29,6 +29,7 @@ public:
     void loadSoundtrack(FILE*);
     void loadBackground(FILE*);
     void unload();
+    void updateScene(int delta_t);
 };
 
 #endif
