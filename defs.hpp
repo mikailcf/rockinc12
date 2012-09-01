@@ -34,3 +34,9 @@ enum STATE{
     GAME,
     MENU,
 };
+
+enum PLAYER_STATE{
+    STAND,
+    WALK,
+    CLIMB,
+};

@@ -1,12 +1,8 @@
 #include <math.h>
 
 #include "player.hpp"
-#include "defs.hpp"
 
-Player::Player()
-{
-
-}
+Player::Player(){};
 
 Player::Player(float x, float y){
     pos.x = 0;

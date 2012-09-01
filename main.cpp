@@ -1,6 +1,5 @@
-
-#include<cstdlib>
-#include"game.hpp"
+#include <cstdlib>
+#include "game.hpp"
 
 using namespace std;
 using namespace sf;

@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "defs.hpp"
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
@@ -16,6 +17,7 @@ public:
     int can_jump;
     int jumping;
     float left, top, width, height;
+    PLAYER_STATE state;
 
     Player();
     Player(float x, float y);
