@@ -19,7 +19,7 @@ World::World()
     bg_img.loadFromFile(RES("cute_image.jpg"));
 }
 
-void World::LoadBlocks(FILE* file)
+void World::loadBlocks(FILE* file)
 {
     int n = 0;
     fscanf(file, "%d", &n);
@@ -30,7 +30,7 @@ void World::LoadBlocks(FILE* file)
     }
 }
 
-void World::LoadItems(FILE* file)
+void World::loadItems(FILE* file)
 {
     int n = 0;
     fscanf(file, "%d", &n);
@@ -41,7 +41,7 @@ void World::LoadItems(FILE* file)
     }
 }
 
-void World::LoadPlayers(FILE* file)
+void World::loadPlayers(FILE* file)
 {
     for (int i = 0; i < 2; i++) {
         float x, y;
@@ -56,9 +56,9 @@ void World::load(string filename)
     if (level_file == NULL)
         exit(EXIT_FAILURE);
     
-    LoadPlayers(level_file);
-    LoadItems(level_file);
-    LoadBlocks(level_file);
+    loadPlayers(level_file);
+    loadItems(level_file);
+    loadBlocks(level_file);
 
     fclose(level_file);
 }
