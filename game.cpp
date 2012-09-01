@@ -88,7 +88,8 @@ void Game::run()
 
 void Game::newLevel()
 {
-    level++;
+    if (++level > 0)
+        world.unload();
     string s("level0.dat");
     s[5] = '0' + level;
     world.load(RES(s));

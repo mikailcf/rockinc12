@@ -29,12 +29,11 @@ void World::loadSoundtrack(FILE* file)
 {
     char filename[MAX_NAME];
     fscanf(file, "%s\n", filename);
-    if (!sound.first.loadFromFile(RES(string(filename))))
+    if (!sound.openFromFile(RES(string(filename))))
         exit(EXIT_FAILURE);
-    sound.second.setBuffer(sound.first); 
-    sound.second.setLoop(true);
-    sound.second.setVolume(1);
-    sound.second.play();
+    sound.setLoop(true);
+    sound.setVolume(100);
+    sound.play();
 }
 
 void World::loadBlocks(FILE* file)
@@ -129,3 +128,9 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
             break;
     }
 }
+
+void World::unload()
+{
+    sound.stop();
+}
+

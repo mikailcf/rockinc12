@@ -13,7 +13,7 @@ private:
     Player player[2];
     vector<Item> items;
     vector<Block> blocks;
-    pair<sf::SoundBuffer, sf::Sound> sound;
+    sf::Music sound;
 
     sf::Sprite bg_sprite;
     sf::Image bg_img;
@@ -28,6 +28,7 @@ public:
     void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
     void loadSoundtrack(FILE*);
     void loadBackground(FILE*);
+    void unload();
 };
 
 #endif
