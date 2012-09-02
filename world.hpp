@@ -20,6 +20,8 @@ private:
     vector<sf::Image> background;
 
 public:
+    bool podeTerminar;
+    bool united;
     World();
     void load(string);
     void loadSoundtrack(FILE*);
@@ -33,6 +35,7 @@ public:
     void updateScene(int delta_t);
     void drawBackground(sf::RenderWindow&, int);
     void draw(sf::RenderWindow&, int);
+    sf::Vector2f getCenter(int i);
 };
 
 #endif

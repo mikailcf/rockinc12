@@ -15,6 +15,7 @@ void comment(FILE *file){
 
 World::World()
 {
+    podeTerminar = !false;
 }
 
 void World::loadBackground(FILE* file)
@@ -137,7 +138,11 @@ void World::draw(sf::RenderWindow &window, int delta_t)
 }
 
 void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
-    switch (keyCode) {
+    if (united) {
+        for (int i = 0; i < 2; i++)
+            player[i].stop();
+    }
+    else switch (keyCode) {
         case sf::Keyboard::W:
             player[0].processInput("up", keyPressed);
             break;
@@ -158,7 +163,7 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
             break;
         case sf::Keyboard::R:
             player[0].setPosition(10.0, 10.0);
-/*
+            break;
         case sf::Keyboard::T:
             player[1].processInput("up", keyPressed);
             break;
@@ -176,7 +181,7 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
             break;
         case sf::Keyboard::Z:
             player[1].processInput("item", keyPressed);
-            break;*/
+            break;
         default:
             break;
     }
@@ -203,5 +208,10 @@ void World::updateScene(int delta_t)
         for (vector<Box>::iterator it = boxes.begin(); it != boxes.end(); it++)
             it->collide(&player[i]);
     }
+}
+
+sf::Vector2f World::getCenter(int i)
+{
+    return sf::Vector2f(player[i].pos.x, RES_Y/2);
 }
 

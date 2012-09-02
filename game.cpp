@@ -13,10 +13,8 @@ Game::Game()
     window.create(sf::VideoMode(RES_X, RES_Y), TITLE);
     window.setKeyRepeatEnabled(false);
     for (int i = 0; i < 2; i++) {
-/*        views[i].setCenter(RES_X/2, RES_Y/2);
-        views[i].setCenter(0.0, RES_Y/2);
         views[i].setSize(RES_X/2, RES_Y);
-        views[i].setViewport(sf::FloatRect(i*0.5, 0, 0.5, 1));*/
+        views[i].setViewport(sf::FloatRect(0.501*i, 0, 0.499, 1));
     }
     window.setVerticalSyncEnabled(true);
     state = GAME;
@@ -65,12 +63,23 @@ void Game::draw()
     world.updateScene(delta_t);
 
     window.clear();
-    window.setView(window.getDefaultView());
-    for (int i = 0; i < 2; i++) {
-        window.setView(views[i]);
-        world.drawBackground(window, delta_t);
+    int dx = abs((int)(world.getCenter(0).x - world.getCenter(1).x));
+    int dy = abs((int)(world.getCenter(0).y - world.getCenter(1).y));
+    if (world.united || (dx < RES_X/2 && world.podeTerminar && dy < RES_Y)) {
+        world.united = true;
+        sf::View view = window.getDefaultView();
+        view.setCenter(sf::Vector2f(min(world.getCenter(0).x, world.getCenter(1).x) + dx/2, RES_Y/2));
+        window.setView(view);
+        world.drawBackground(window, delta_t);    
         world.draw(window, delta_t);
     }
+    else
+        for (int i = 0; i < 2; i++) {
+            views[i].setCenter(world.getCenter(i));
+            window.setView(views[i]);
+            world.drawBackground(window, delta_t);
+            world.draw(window, delta_t);
+        }
     window.display();
 }
 
@@ -89,6 +98,7 @@ void Game::run()
 
 void Game::newLevel()
 {
+    world.united = false;
     if (level++ > 0)
         world.unload();
     string s("level0.dat");
