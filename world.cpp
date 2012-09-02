@@ -186,11 +186,33 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
             player[0].processInput("jump", keyPressed);
             break;
         case sf::Keyboard::Return:
-            player[0].processInput("item", keyPressed);
+            printf("top 1 %f\n", player[0].top);
+            if(player[0].item == NULL && keyPressed){
+                printf("top 2 %f\n", player[0].top);
+                // printf("nao tinha item\n");
+                for (vector<Item>::iterator it = items.begin(); it != items.end(); it++){
+                    printf("top 3 %f\n", player[0].top);
+                    // printf("1");
+                    if(player[0].collide_item(&(*it))){
+                        printf("top 4 %f\n", player[0].top);
+                        player[0].item = &(*it);
+                        printf("top 5 %f\n", player[0].top);
+                        // printf("tem um item aqui\n");
+                        (*it).move(player[0].left - (*it).left + player[0].width, -20.0);
+                        printf("top 6 %f\n", player[0].top);
+                        (*it).picked = true;
+                    }
+                }
+                // printf("\n");
+            }
+            // else player[0].processInput("item", keyPressed);
             break;
         case sf::Keyboard::R:
-            player[0].setPosition(10.0, 10.0);
+            // player[0].setPosition(10.0, 10.0);
+            // Item *item = player[0].
+            (player[0].item)->move(20.0, -5.0);
             break;
+
         case sf::Keyboard::T:
             player[1].processInput("up", keyPressed);
             break;
@@ -212,6 +234,10 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
         default:
             break;
     }
+}
+
+void World::jumping(int delta_t, int player_num){
+    if(player[player_num].jumping == 1) player[player_num].jump(delta_t);
 }
 
 void World::unload()
@@ -238,13 +264,20 @@ void World::updateScene(int delta_t)
         player[i].move(delta_t);
 
         for (vector<Item>::iterator it = items.begin(); it != items.end(); it++){
-            it->accel(delta_t, GRAVITY);
-            it->move(delta_t);
+            if (!(it->picked)) {
+                it->accel(delta_t, GRAVITY);
+                it->move(delta_t);
 
-            for (vector<Block>::iterator ito = blocks.begin(); ito != blocks.end(); ito++)
-                ito->collide(&(*it));
-            for (vector<Box>::iterator ito = boxes.begin(); ito != boxes.end(); ito++)
-                ito->collide(&(*it));
+                for (vector<Block>::iterator ito = blocks.begin(); ito != blocks.end(); ito++)
+                    ito->collide(&(*it));
+                for (vector<Box>::iterator ito = boxes.begin(); ito != boxes.end(); ito++)
+                    ito->collide(&(*it));
+            }
+
+            // for (vector<Block>::iterator ito = blocks.begin(); ito != blocks.end(); ito++)
+            //     ito->collide(&(*it));
+            // for (vector<Box>::iterator ito = boxes.begin(); ito != boxes.end(); ito++)
+            //     ito->collide(&(*it));
         }
         for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++)
             (*it).collide(&player[i]);

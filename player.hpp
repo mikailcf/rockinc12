@@ -26,7 +26,7 @@ public:
     float left, top, width, height;
     PLAYER_STATE state;
 
-    Item * item;
+    Item *item;
 
     Player();
     Player(float, float, std::string filename);
@@ -43,7 +43,8 @@ public:
     void turn(int move);
     void accel(int delta_t, float gravity);
     void jump(int delta_t);
-    
+    int collide_item(Item *item);
+
     void processInput(const string key, bool keyPressed);
     void stop();
     int getMovestate();

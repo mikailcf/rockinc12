@@ -52,15 +52,17 @@ void Game::processEvents()
                 break;
         }
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) world.jumping(delta_t, 0);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::V)) world.jumping(delta_t, 1);
 }
 
 void Game::draw()
 {
-    current_t = clock.getElapsedTime().asMilliseconds();
-    delta_t = current_t - last_t;
-    last_t = current_t;
+    // current_t = clock.getElapsedTime().asMilliseconds();
+    // delta_t = current_t - last_t;
+    // last_t = current_t;
 
-    world.updateScene(delta_t);
+    // world.updateScene(delta_t);
 
     window.clear();
     int dx = abs((int)(world.getCenter(0).x - world.getCenter(1).x));
@@ -91,7 +93,13 @@ bool Game::isRunning()
 void Game::run()
 {
     while (isRunning()) {
+        current_t = clock.getElapsedTime().asMilliseconds();
+        delta_t = current_t - last_t;
+        last_t = current_t;
+        world.updateScene(delta_t);
         processEvents();
+
+        // world.updateScene(delta_t);
         draw();
     }
 }

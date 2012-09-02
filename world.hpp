@@ -38,6 +38,7 @@ public:
     void loadTraps(FILE*);
     void unload();
     void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
+    void jumping(int delta_t, int player_num);
     void updateScene(int delta_t);
     void drawBackground(sf::RenderWindow&, int);
     void draw(sf::RenderWindow&, int);

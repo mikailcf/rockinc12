@@ -8,6 +8,7 @@ Item::Item()
 
 Item::Item(float left, float top, float width, float height, string nome)
 {
+    picked = false;
     texture.loadFromFile(nome);
     // cout << "lalala " << nome << endl;
     sprite.setTexture(texture);
@@ -25,7 +26,16 @@ void Item::draw(sf::RenderWindow *window){
     window->draw(sprite);
 }
 
+void Item::updateMove(int mv_state){
+    move_state = mv_state;
+}
+
+// void Item::move(int delta_t){
+//     move(delta_t, move_state);
+// }
+
 void Item::move(int delta_t){
+    // move_state = mv_state;
     if (move_state == 0) spd.x = 0;
 
     if((spd.x > 0.0 && stuck.x != 1) || (spd.x < 0.0 && stuck.x != -1)){

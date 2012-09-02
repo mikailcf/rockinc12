@@ -156,6 +156,7 @@ int Block::collide(Item *item){
         if(top_item < top){                          // veio de cima
             if(item->stuck.y == 0) item->stuck.y = 1;
             item->spd.y = 0.0;
+            item->spd.x = 0.0;
             item->move(0.0, -min_bottom + max_top);
             attached_item = item;
         }
@@ -163,7 +164,6 @@ int Block::collide(Item *item){
             if(item->stuck.y == 0) item->stuck.y = -1;
             item->spd.y = 0.0;
             item->move(0.0, min_bottom - max_top + 1);
-
         }
     }
     else{

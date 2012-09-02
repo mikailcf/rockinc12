@@ -14,6 +14,7 @@ private:
     int animation_t, jump_t;
 
 public:
+    bool picked;
     float left, top, width, height;
     sf::Vector2f spd;
     sf::Vector2i stuck;
@@ -22,7 +23,9 @@ public:
     Item();
     Item(float left, float top, float width, float height, string);
     void draw(sf::RenderWindow *window);
+    void updateMove(int mv_state);
     void move(int delta_t);
+    // void move(int delta_t, int mv_state);
     void move(float offsetX, float offsetY);
     void accel(int delta_t, float gravity);
 };

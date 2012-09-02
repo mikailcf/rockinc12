@@ -57,22 +57,23 @@ int Box::collide(Player *player){
     float bottom_item;
     float left_item;
     float right_item;
+    float max_top;
+    float min_bottom;
+    float max_left;
+    float min_right;
+
     if (player->item != NULL) {
         top_item    = player->item->top;
         bottom_item = player->item->top + player->item->height;
         left_item   = player->item->left;
         right_item  = player->item->left + player->item->width;
     }
-    float max_top;
-    float min_bottom;
-    float max_left;
-    float min_right;
 
-    if(top > bottom_player && (player->item == NULL or top > bottom_item)) return 0;
-    if(bottom < top_player && (player->item == NULL or bottom < bottom_item)) return 0;
+    if((top > bottom_player) && (player->item == NULL || top > bottom_item)) return 0;
+    if((bottom < top_player) && (player->item == NULL || bottom < top_item)) return 0;
 
-    if(right < left_player && (player->item == NULL or right < left_item)) return 0;
-    if(left > right_player && (player->item == NULL or left > right_item)) return 0;
+    if((right < left_player) && (player->item == NULL || right < left_item)) return 0;
+    if((left > right_player) && (player->item == NULL || left > right_item)) return 0;
 
     // PLAYER
     max_top = top > top_player ? top : top_player;
@@ -87,56 +88,79 @@ int Box::collide(Player *player){
             player->move(0.0, -min_bottom + max_top);
             player->can_jump = 1;
             player->jumping = 0;
+
+            // printf("player de cima\n");
+            return 1;
         }
         else{                                           // veio de baixo
             if(player->stuck.y == 0) player->stuck.y = -1;
             player->spd.y = 0.0;
-            player->move(0.0, min_bottom - max_top + 1);
+            // player->move(0.0, min_bottom - max_top + 1);
+
+            printf("player de baixo\n");
+            return 1;
         }
     }
     else{
         if(left_player < left){                           // veio da esquerda
             if(player->stuck.x == 0) player->stuck.x = 1;
             player->move(-min_right + max_left, 0.0);
+
+            // printf("player de esq\n");
+            return 1;
         }
         else if(player->spd.x < 0.0) {                     // veio da direita
             if(player->stuck.x == 0) player->stuck.x = -1;
             player->move(min_right - max_left, 0.0);
+
+            // printf("player de dir\n");
+            return 1;
         }
     }
+
+    printf("top_item %f bottom_item %f left_item %f right_item %f\n", top_item, bottom_item, left_item, right_item);
+    printf("top %f bottom %f left %f right %f\n", top, bottom, left, right);
 
     // ITEM
-    if (player->item != NULL) {
-        max_top = top > top_item ? top : top_item; 
-        min_bottom = bottom < bottom_item ? bottom : bottom_item;
-        max_left = left > left_item ? left : left_item;
-        min_right = right < right_item ? right : right_item;
+    // if (player->item != NULL) {
+    //     printf("tenho um item\n");
 
-        if(min_right - max_left > min_bottom - max_top){   
-            if(top_item < top){                          // veio de cima
-                if(player->stuck.y == 0) player->stuck.y = 1;
-                player->spd.y = 0.0;
-                player->move(0.0, -min_bottom + max_top);
-                player->can_jump = 1;
-                player->jumping = 0;
-            }
-            else{                                           // veio de baixo
-                if(player->stuck.y == 0) player->stuck.y = -1;
-                player->spd.y = 0.0;
-                player->move(0.0, min_bottom - max_top + 1);
-            }
-        }
-        else{
-            if(left_item < left){                           // veio da esquerda
-                if(player->stuck.x == 0) player->stuck.x = 1;
-                player->move(-min_right + max_left, 0.0);
-            }
-            else if(player->spd.x < 0.0) {                     // veio da direita
-                if(player->stuck.x == 0) player->stuck.x = -1;
-                player->move(min_right - max_left, 0.0);
-            }
-        }
-    }
+    //     max_top = top > top_item ? top : top_item;
+    //     min_bottom = bottom < bottom_item ? bottom : bottom_item;
+    //     max_left = left > left_item ? left : left_item;
+    //     min_right = right < right_item ? right : right_item;
+
+    //     if(min_right - max_left > min_bottom - max_top){   
+    //         if(top_item < top){                          // veio de cima
+    //             if(player->stuck.y == 0) player->stuck.y = 1;
+    //             player->spd.y = 0.0;
+    //             player->move(0.0, -min_bottom + max_top);
+    //             player->can_jump = 1;
+    //             player->jumping = 0;
+
+    //             printf("de cima\n");
+    //         }
+    //         else{                                           // veio de baixo
+    //             if(player->stuck.y == 0) player->stuck.y = -1;
+    //             player->spd.y = 0.0;
+    //             player->move(0.0, min_bottom - max_top + 1);
+    //             printf("de baixo\n");
+    //         }
+    //     }
+    //     else{
+    //         if(left_item < left){                           // veio da esquerda
+    //             if(player->stuck.x == 0) player->stuck.x = 1;
+    //             player->move(-min_right + max_left, 0.0);
+    //             printf("de esquerda\n");
+    //         }
+    //         else if(player->spd.x < 0.0) {                     // veio da direita
+    //             if(player->stuck.x == 0) player->stuck.x = -1;
+    //             player->move(min_right - max_left, 0.0);
+    //             printf("de direita\n");
+    //         }
+    //     }
+    // }
+    // else printf("nao tenho item\n");
     return 1;
 }
 
