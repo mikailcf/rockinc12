@@ -1,0 +1,9 @@
+Fogo: 120x120
+tamanho spritesheet: 600x120
+
+botão:100x100
+tamanho spritesheet: 600x100
+
+teletransporte: 150x216
+tamanho spritesheet: 300x216
+
