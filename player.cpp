@@ -1,6 +1,8 @@
 #include <math.h>
 #include "player.hpp"
 
+#include "checkpoint.hpp"
+
 Player::Player(){
     item = NULL;
     move_state = 0;
@@ -12,6 +14,10 @@ Player::Player(float x, float y, std::string filename){
     state = STAND;
     move_state = 0;
     sprite.move(x, y);
+
+    pos.x = x;
+    pos.y = y;
+    checkpoint = NULL;
 
     item = NULL;
     move_state = 0;
@@ -83,6 +89,7 @@ void Player::draw(sf::RenderWindow *window){
 
 void Player::move(int delta_t){
 
+//    printf("%f\n", spd.x);
     if (move_state == 0) spd.x = 0;
 
     if((spd.x > 0.0 && stuck.x != 1) || (spd.x < 0.0 && stuck.x != -1)){
@@ -98,6 +105,7 @@ void Player::move(int delta_t){
         pos.y += spd.y * delta_t;
         top += spd.y * delta_t;
     }
+    
 }
 
 void Player::move(float offsetX, float offsetY){
@@ -202,5 +210,21 @@ void Player::stop()
 int Player::getMovestate()
 {
     return move_state;
+}
+
+void Player::setCheckpoint(Checkpoint* check)
+{
+    checkpoint = check;
+}
+
+void Player::restoreCheckpoint()
+{
+    setPosition(checkpoint->getPosition().x, checkpoint->getPosition().y);
+    unstuck();
+}
+
+void Player::unstuck()
+{
+    stuck.x = stuck.y = 0;
 }
 

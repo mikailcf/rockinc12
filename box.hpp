@@ -17,8 +17,10 @@ public:
 
     int collide(Player *player);
     int collide(Item *item);
+    int intersects(Player *player);
     void move(float offsetX, float offsetY);
     void draw(sf::RenderWindow *window);
+    sf::Vector2f getPosition();
 };
 
 #endif

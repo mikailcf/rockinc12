@@ -16,6 +16,34 @@ Box::Box(sf::Vector2f origin, sf::Vector2f size){
     box.setFillColor(sf::Color::Blue);
 }
 
+int Box::intersects(Player *player)
+{ 
+    float top    = box.getGlobalBounds().top;
+    float bottom = box.getGlobalBounds().top + box.getGlobalBounds().height;
+    float left   = box.getGlobalBounds().left;
+    float right  = box.getGlobalBounds().left + box.getGlobalBounds().width;
+    float top_player    = player->top;
+    float bottom_player = player->top + player->height;
+    float left_player   = player->left;
+    float right_player  = player->left + player->width;
+    float bottom_item;
+    float left_item;
+    float right_item;
+    if (player->item != NULL) {
+        bottom_item = player->item->top + player->item->height;
+        left_item   = player->item->left;
+        right_item  = player->item->left + player->item->width;
+    }
+
+    if(top > bottom_player && (player->item == NULL or top > bottom_item)) return 0;
+    if(bottom < top_player && (player->item == NULL or bottom < bottom_item)) return 0;
+
+    if(right < left_player && (player->item == NULL or right < left_item)) return 0;
+    if(left > right_player && (player->item == NULL or left > right_item)) return 0;
+    
+    return 1;
+}    
+    
 int Box::collide(Player *player){
     float top    = box.getGlobalBounds().top;
     float bottom = box.getGlobalBounds().top + box.getGlobalBounds().height;
@@ -175,3 +203,13 @@ void Box::draw(sf::RenderWindow *window){
     // sprite.setTexture(tex);
     window->draw(box);
 }
+
+sf::Vector2f Box::getPosition()
+{
+    float top    = box.getGlobalBounds().top;
+    float bottom = box.getGlobalBounds().top + box.getGlobalBounds().height;
+    float left   = box.getGlobalBounds().left;
+    float right  = box.getGlobalBounds().left + box.getGlobalBounds().width;
+    return sf::Vector2f((left + right)/2, (top + bottom)/2);
+}
+

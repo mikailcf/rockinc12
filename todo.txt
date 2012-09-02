@@ -1,0 +1,6 @@
+todo
+
+teletransporte
+sprites no trigger
+camera acompanhar no eixo y com offset
+

@@ -3,6 +3,8 @@
 #include "player.hpp"
 #include "block.hpp"
 #include "item.hpp"
+#include "checkpoint.hpp"
+#include "trap.hpp"
 
 #include "box.hpp"
 
@@ -18,6 +20,8 @@ private:
     vector<Box> boxes;
     vector<sf::Music*> score;
     vector<sf::Image> background;
+    vector<Checkpoint> checkpoints;
+    vector<Trap> traps;
 
 public:
     bool podeTerminar;
@@ -30,6 +34,8 @@ public:
     void loadBlocks(FILE*);
     void loadBoxes(FILE*);
     void loadItems(FILE*);
+    void loadCheckpoints(FILE*);
+    void loadTraps(FILE*);
     void unload();
     void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
     void updateScene(int delta_t);
