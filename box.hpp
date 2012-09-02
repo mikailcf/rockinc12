@@ -17,6 +17,7 @@ public:
 
     int collide(Player *player);
     void move(float offsetX, float offsetY);
+    void draw(sf::RenderWindow *window);
 };
 
 #endif

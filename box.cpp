@@ -12,6 +12,8 @@ Box::Box(sf::Vector2f origin, sf::Vector2f size){
     box.setPoint(3, sf::Vector2f(-size.x/2.0, size.y/2.0));
 
     box.move(origin + sf::Vector2f(size.x/2.0, size.y/2.0));
+
+    box.setFillColor(sf::Color::Blue);
 }
 
 int Box::collide(Player *player){
@@ -114,4 +116,9 @@ void Box::move(float offsetX, float offsetY){
     // if(attached != NULL) attached->move(offsetX, offsetY + 0.1);
     box.move(offsetX, offsetY);
     // this->updateCenter();
+}
+
+void Box::draw(sf::RenderWindow *window){
+    // sprite.setTexture(tex);
+    window->draw(box);
 }

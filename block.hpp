@@ -23,7 +23,7 @@ public:
 
     void init_animation(float time);
 
-    int collide(Player *tri);
+    int collide(Player *player);
     void move(float offsetX, float offsetY);
     void moveAnimate(float time);
     void updateCenter();
