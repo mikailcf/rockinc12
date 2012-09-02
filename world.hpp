@@ -15,6 +15,7 @@ private:
     Player player[2];
     vector<Item> items;
     vector<Block> blocks;
+    vector<Box> boxes;
     vector<sf::Music*> score;
     vector<sf::Image> background;
 
@@ -25,6 +26,7 @@ public:
     void loadBackground(FILE*);
     void loadPlayers(FILE*);
     void loadBlocks(FILE*);
+    void loadBoxes(FILE*);
     void loadItems(FILE*);
     void unload();
     void processInput(sf::Keyboard::Key keyCode, bool keyPressed);

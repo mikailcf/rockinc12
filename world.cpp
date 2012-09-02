@@ -47,6 +47,17 @@ void World::loadSoundtrack(FILE* file)
     }
 }
 
+void World::loadBoxes(FILE* file)
+{
+    int n = 0;
+    fscanf(file, "%d", &n);
+    while (n--) {
+        float ox, oy, sx, sy;
+        fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
+        boxes.push_back(Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy)));
+    }
+}
+
 void World::loadBlocks(FILE* file)
 {
     int n = 0;
@@ -77,7 +88,6 @@ void World::loadPlayers(FILE* file)
         char filename[MAX_NAME];
         float x, y;
         fscanf(file, "%f %f %s", &x, &y, filename);
-        printf("%f %f %s\n", x, y, filename);
         player[i] = Player(x, y, RES(string(filename)));
     }
 }
@@ -93,6 +103,7 @@ void World::load(string filename)
     loadPlayers(level_file);
     loadItems(level_file);
     loadBlocks(level_file);
+    loadBoxes(level_file);
 
     fclose(level_file);
 }
@@ -114,7 +125,7 @@ void World::draw(sf::RenderWindow &window, int delta_t)
         it->draw(&window);
     }
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
-            
+        
     }
     for (int i = 0; i < 2; i++) {
         player[i].animate(delta_t);
@@ -175,6 +186,7 @@ void World::unload()
     score.clear();
     items.clear();
     blocks.clear();
+    boxes.clear();    
     background.clear();
 }
 
@@ -183,9 +195,10 @@ void World::updateScene(int delta_t)
     for (int i = 0; i < 2; i++) {
         player[i].accel(delta_t, GRAVITY);
         player[i].move(delta_t);
-    }
-    for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-        int col = it->collide(&player[0]);
+        for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++)
+            it->collide(&player[i]);
+        for (vector<Box>::iterator it = boxes.begin(); it != boxes.end(); it++)
+            it->collide(&player[i]);
     }
 }
 
