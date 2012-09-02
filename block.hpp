@@ -9,6 +9,8 @@
 class Block{
     sf::ConvexShape block;
     sf::Vector2f center, initial_center;
+    sf::Texture tex;
+    sf::Sprite sprite;
     int relative_position;
     Player *attached;
     sf::View *view;
@@ -17,7 +19,7 @@ class Block{
 
 public:
     Block();
-    Block(sf::Vector2f origin, sf::Vector2f size, bool anim);
+    Block(sf::Vector2f origin, sf::Vector2f size, bool anim, string);
 
     void init_animation(float time);
 

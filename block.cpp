@@ -1,7 +1,7 @@
 #include <SFML/OpenGL.hpp>
 #include "block.hpp"
 
-Block::Block(sf::Vector2f origin, sf::Vector2f size, bool anim){
+Block::Block(sf::Vector2f origin, sf::Vector2f size, bool anim, std::string filename){
     block.setPointCount(4);
 
     block.setPoint(0, sf::Vector2f(-size.x/2.0, -size.y/2.0));
@@ -9,8 +9,8 @@ Block::Block(sf::Vector2f origin, sf::Vector2f size, bool anim){
     block.setPoint(2, sf::Vector2f(size.x/2.0, size.y/2.0));
     block.setPoint(3, sf::Vector2f(-size.x/2.0, size.y/2.0));
 
-    block.setFillColor(sf::Color(255, 255, 255, 255));
-
+    tex.loadFromFile(filename);
+    
     block.move(origin + sf::Vector2f(size.x/2.0, size.y/2.0));
     initial_center = origin;
 
@@ -72,7 +72,6 @@ int Block::collide(Player *player){
     min_right = right < right_player ? right : right_player;
 
     if(min_right - max_left > min_bottom - max_top){
-        printf("veio de ");
         if(top_player < top){                          // veio de cima
             if(player->stuck.y == 0) player->stuck.y = 1;
             player->spd.y = 0.0;
@@ -81,18 +80,15 @@ int Block::collide(Player *player){
             player->can_jump = 1;
             player->jumping = 0;
 
-            printf("veio de cima");
         }
         else{                                           // veio de baixo
             if(player->stuck.y == 0) player->stuck.y = -1;
             player->spd.y = 0.0;
             player->move(0.0, min_bottom - max_top + 1);
 
-            printf("veio de baixo");
         }
     }
     else{
-        printf("veio de nada");
         if(left_player < left){                           // veio da esquerda
             if(player->stuck.x == 0) player->stuck.x = 1;
             player->move(-min_right + max_left, 0.0);
@@ -123,6 +119,7 @@ void Block::updateCenter(){
 }
 
 void Block::draw(sf::RenderWindow *window){
-    window->draw(block);
+    sprite.setTexture(tex);
+    window->draw(sprite);
 }
 

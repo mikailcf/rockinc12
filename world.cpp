@@ -19,20 +19,32 @@ World::World()
 
 void World::loadBackground(FILE* file)
 {
+    int n = 0;
+    fscanf(file, "%d", &n);
     char filename[MAX_NAME];
-    fscanf(file, "%s\n", filename);
-    bg_img.loadFromFile(RES(string(filename)));
+    while (n--) {
+        fscanf(file, "%s", filename);
+        sf::Image image;
+        image.loadFromFile(RES(string(filename)));
+        background.push_back(image);
+    }
 }
 
 void World::loadSoundtrack(FILE* file)
 {
-    char filename[MAX_NAME];
-    fscanf(file, "%s\n", filename);
-    if (!sound.openFromFile(RES(string(filename))))
-        exit(EXIT_FAILURE);
-    sound.setLoop(true);
-    sound.setVolume(100);
-    sound.play();
+    int n = 0;
+    fscanf(file, "%d", &n);
+    while (n--) {
+        char filename[MAX_NAME];
+        fscanf(file, "%s\n", filename);
+/*        sf::Music *sound = new sf::Music();
+        if (!sound->openFromFile(RES(string(filename))))
+            exit(EXIT_FAILURE);
+        sound->setLoop(true);
+        sound->setVolume(100);
+        sound->play();
+        score.push_back(sound);*/
+    }
 }
 
 void World::loadBlocks(FILE* file)
@@ -40,9 +52,10 @@ void World::loadBlocks(FILE* file)
     int n = 0;
     fscanf(file, "%d", &n);
     while (n--) {
+        char filename[MAX_NAME];
         float ox, oy, sx, sy;
-        fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
-        blocks.push_back(Block(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy), false));
+        fscanf(file, "%f %f %f %f %s", &ox, &oy, &sx, &sy, filename);
+        blocks.push_back(Block(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy), false, RES(string(filename))));
     }
 }
 
@@ -51,18 +64,21 @@ void World::loadItems(FILE* file)
     int n = 0;
     fscanf(file, "%d", &n);
     while (n--) {
+        char filename[MAX_NAME];
         float ox, oy, sx, sy;
-        fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
-        items.push_back(Item(ox, oy, sx, sy));
+        fscanf(file, "%f %f %f %f %s", &ox, &oy, &sx, &sy, filename);
+        items.push_back(Item(ox, oy, sx, sy, RES(string(filename))));
     }
 }
 
 void World::loadPlayers(FILE* file)
 {
     for (int i = 0; i < 2; i++) {
+        char filename[MAX_NAME];
         float x, y;
-        fscanf(file, "%f %f", &x, &y);
-        player[i] = Player(x, y, RES("sheet.png"));
+        fscanf(file, "%f %f %s", &x, &y, filename);
+        printf("%f %f %s\n", x, y, filename);
+        player[i] = Player(x, y, RES(string(filename)));
     }
 }
 
@@ -83,16 +99,19 @@ void World::load(string filename)
 
 void World::drawBackground(sf::RenderWindow &window, int delta_t)
 {
-    sf::Texture bg_tex;
-    bg_tex.loadFromImage(bg_img);
-    bg_sprite.setTexture(bg_tex);
-    window.draw(bg_sprite);
+    for (vector<sf::Image>::iterator it = background.begin(); it != background.end(); it++) { 
+        sf::Texture texture;
+        texture.loadFromImage(*it);
+        sf::Sprite sprite;
+        sprite.setTexture(texture);
+        window.draw(sprite);
+    }
 }
 
 void World::draw(sf::RenderWindow &window, int delta_t)
 {
     for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-        (*it).draw(&window);
+        it->draw(&window);
     }
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
             
@@ -120,11 +139,12 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
         case sf::Keyboard::Space:
             player[0].processInput("jump", keyPressed);
             break;
-        case sf::Keyboard::I:
+        case sf::Keyboard::Return:
             player[0].processInput("item", keyPressed);
             break;
         case sf::Keyboard::R:
             player[0].setPosition(10.0, 10.0);
+/*
         case sf::Keyboard::T:
             player[1].processInput("up", keyPressed);
             break;
@@ -142,7 +162,7 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
             break;
         case sf::Keyboard::Z:
             player[1].processInput("item", keyPressed);
-            break;
+            break;*/
         default:
             break;
     }
@@ -150,16 +170,22 @@ void World::processInput(sf::Keyboard::Key keyCode, bool keyPressed) {
 
 void World::unload()
 {
-    sound.stop();
+    for (vector<sf::Music*>::iterator it = score.begin(); score.end() != it; it++)
+        (*it)->stop();
+    score.clear();
+    items.clear();
+    blocks.clear();
+    background.clear();
 }
 
-void World::updateScene(int delta_t){
-    int col = 0;
+void World::updateScene(int delta_t)
+{
+    for (int i = 0; i < 2; i++) {
         player[i].accel(delta_t, GRAVITY);
         player[i].move(delta_t);
     }
-    for(vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
-        // col = it->collide(&player[0]);
+    for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
+        int col = it->collide(&player[0]);
     }
 }
 

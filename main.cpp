@@ -1,10 +1,7 @@
 
-#include <cstdlib>
+#include "defs.hpp"
 #include "game.hpp"
 
-using namespace std;
-using namespace sf;
-    	
 int main(int argc, const char * argv[])
 {
     Game game;

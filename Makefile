@@ -17,7 +17,7 @@ $(BIN): $(OBJ)
 	$(CXX) $^ -o $@ $(LIBS)
 
 clean:
-	rm -rf $(OBJ) $(BIN) *~
+	rm -rf $(OBJ) $(BIN) *~ ./res/*~
 
 run:
 	./$(BIN)

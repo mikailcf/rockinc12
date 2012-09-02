@@ -10,7 +10,7 @@ private:
     string nome;
 public:
     Item();
-    Item(float left, float top, float width, float height);
+    Item(float left, float top, float width, float height, string);
 
     float left, top, width, height;
 

@@ -15,24 +15,22 @@ private:
     Player player[2];
     vector<Item> items;
     vector<Block> blocks;
-    sf::Music sound;
-
-    sf::Sprite bg_sprite;
-    sf::Image bg_img;
+    vector<sf::Music*> score;
+    vector<sf::Image> background;
 
 public:
     World();
     void load(string);
+    void loadSoundtrack(FILE*);
+    void loadBackground(FILE*);
     void loadPlayers(FILE*);
     void loadBlocks(FILE*);
     void loadItems(FILE*);
+    void unload();
+    void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
+    void updateScene(int delta_t);
     void drawBackground(sf::RenderWindow&, int);
     void draw(sf::RenderWindow&, int);
-    void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
-    void loadSoundtrack(FILE*);
-    void loadBackground(FILE*);
-    void unload();
-    void updateScene(int delta_t);
 };
 
 #endif
