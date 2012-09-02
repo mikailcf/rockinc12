@@ -2,6 +2,8 @@
 #include "defs.hpp"
 #include "item.hpp"
 
+class Checkpoint;
+
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
@@ -13,6 +15,7 @@ class Player{
     float turn_spd;
     sf::Texture tex;
     sf::Sprite sprite;
+    Checkpoint* checkpoint;
 
 public:
     sf::Vector2f pos;
@@ -44,5 +47,9 @@ public:
     void processInput(const string key, bool keyPressed);
     void stop();
     int getMovestate();
+
+    void setCheckpoint(Checkpoint*);
+    void restoreCheckpoint();
+    void unstuck();
 };
 #endif

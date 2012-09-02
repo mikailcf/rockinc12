@@ -16,8 +16,10 @@ public:
     Box(sf::Vector2f origin, sf::Vector2f size);
 
     int collide(Player *player);
+    int intersects(Player *player);
     void move(float offsetX, float offsetY);
     void draw(sf::RenderWindow *window);
+    sf::Vector2f getPosition();
 };
 
 #endif

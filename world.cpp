@@ -83,6 +83,28 @@ void World::loadItems(FILE* file)
     }
 }
 
+void World::loadCheckpoints(FILE* file)
+{
+    int n = 0;
+    fscanf(file, "%d", &n);
+    while (n--) {
+        float ox, oy, sx, sy;
+        fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
+        checkpoints.push_back(Checkpoint(checkpoints.size(), Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy))));
+    }
+}
+
+void World::loadTraps(FILE* file)
+{
+    int n = 0;
+    fscanf(file, "%d", &n);
+    while (n--) {
+        float ox, oy, sx, sy;
+        fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
+        traps.push_back(Trap(Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy))));
+    }
+}
+
 void World::loadPlayers(FILE* file)
 {
     for (int i = 0; i < 2; i++) {
@@ -90,6 +112,7 @@ void World::loadPlayers(FILE* file)
         float x, y;
         fscanf(file, "%f %f %s", &x, &y, filename);
         player[i] = Player(x, y, RES(string(filename)));
+        checkpoints.push_back(Checkpoint(checkpoints.size(), Box(sf::Vector2f(x, y), sf::Vector2f(20, 20))));
     }
 }
 
@@ -105,6 +128,8 @@ void World::load(string filename)
     loadItems(level_file);
     loadBlocks(level_file);
     loadBoxes(level_file);
+    loadCheckpoints(level_file);
+    loadTraps(level_file);
 
     fclose(level_file);
 }
@@ -196,6 +221,8 @@ void World::unload()
     blocks.clear();
     boxes.clear();    
     background.clear();
+    traps.clear();
+    checkpoints.clear();
 }
 
 void World::updateScene(int delta_t)
@@ -207,6 +234,10 @@ void World::updateScene(int delta_t)
             it->collide(&player[i]);
         for (vector<Box>::iterator it = boxes.begin(); it != boxes.end(); it++)
             it->collide(&player[i]);
+        for (vector<Trap>::iterator it = traps.begin(); it != traps.end(); it++)
+            it->check(&player[i]);
+        for (vector<Checkpoint>::iterator it = checkpoints.begin(); it != checkpoints.end(); it++)
+            it->check(&player[i]);
     }
 }
 
