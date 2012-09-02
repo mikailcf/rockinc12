@@ -198,7 +198,6 @@ void World::unload()
     background.clear();
 }
 
-<<<<<<< HEAD
 void World::updateScene(int delta_t)
 {
     for (int i = 0; i < 2; i++) {
