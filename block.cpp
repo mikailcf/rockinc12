@@ -21,7 +21,6 @@ Block::Block(sf::Vector2f origin, sf::Vector2f size, std::string animType, std::
     this->updateCenter();
     attached_player = NULL;
     attached_item = NULL;
-    animate = anim;
 
     float dist = 400;
 
