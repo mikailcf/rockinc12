@@ -24,14 +24,9 @@ void World::loadBackground(FILE* file)
     char filename[MAX_NAME];
     while (n--) {
         fscanf(file, "%s", filename);
-        /*
         sf::Image image;
         image.loadFromFile(RES(string(filename)));
         background.push_back(image);
-        */
-        sf::Texture texture;
-        texture.loadFromFile(RES(string(filename)));
-        background.push_back(texture);
     }
 }
 
@@ -159,14 +154,13 @@ void World::load(string filename)
 
 void World::drawBackground(sf::RenderWindow &window, int delta_t)
 {
-    /*
     for (vector<sf::Image>::iterator it = background.begin(); it != background.end(); it++) { 
         sf::Texture texture;
         texture.loadFromImage(*it);
         sf::Sprite sprite;
         sprite.setTexture(texture);
         window.draw(sprite);
-    }*/
+    }
 
     /*
     for (vector<sf::Texture>::iterator it = background.begin(); it != background.end(); it++) { 

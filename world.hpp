@@ -20,8 +20,7 @@ private:
     vector<Block> blocks;
     vector<Box> boxes;
     vector<sf::Music*> score;
-    //vector<sf::Image> background;
-    vector<sf::Texture> background;
+    vector<sf::Image> background;
     vector<Checkpoint> checkpoints;
     vector<Trap> traps;
     vector<Teleport> teleports;

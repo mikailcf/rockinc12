@@ -18,8 +18,9 @@ private:
     int level;
     sf::Clock clock;
     int current_t, delta_t, last_t;
-
-
+    void gameInit();
+    void slideShow();
+    void loadIntroSound();
 public:
     Game();
     void processEvents();
@@ -27,6 +28,8 @@ public:
     bool isRunning();
     void run();
     void newLevel();
+
+    sf::Music * introSound;
 };
 
 #endif

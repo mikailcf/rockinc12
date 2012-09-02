@@ -2,7 +2,7 @@
 CXX = g++
 CXXFLAGS = -Wall -g -pedantic
 
-LIBS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+LIBS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system -pthread
 
 SRC = $(shell find *.cpp)
 OBJ = $(SRC:%.cpp=lib/%.o)

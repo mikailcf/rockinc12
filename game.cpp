@@ -7,6 +7,7 @@
 #include "game.hpp"
 #include "box.hpp"
 #include <iostream>
+#include <unistd.h>
 
 Game::Game()
 {
@@ -17,10 +18,11 @@ Game::Game()
         views[i].setViewport(sf::FloatRect(0.501*i, 0, 0.499, 1));
     }
     window.setVerticalSyncEnabled(true);
-    state = GAME;
+}
+
+void Game::gameInit() {
     level = 0;
     last_t = 0;
-
     newLevel();
 }
 
@@ -92,10 +94,17 @@ bool Game::isRunning()
 
 void Game::run()
 {
+    loadIntroSound();
+    slideShow();
+    introSound->stop();
+    delete introSound;
+    gameInit();
+
     while (isRunning()) {
         current_t = clock.getElapsedTime().asMilliseconds();
         delta_t = current_t - last_t;
         last_t = current_t;
+
         world.updateScene(delta_t);
         processEvents();
 
@@ -104,13 +113,53 @@ void Game::run()
     }
 }
 
+void Game::slideShow(){
+    vector<sf::Texture *> textures;
+    vector<string> fnames;
+    sf::Sprite sprite;
+
+    fnames.push_back(string("1_final.jpg"));
+    fnames.push_back(string("2_final.jpg"));
+    fnames.push_back(string("3_final.jpg"));
+    fnames.push_back(string("4_final.jpg"));
+    
+    int n = 4;
+    int sleepTime = 1000000;
+    for(int i = 0; i < n; i++) {
+        sf::Texture * texture = new sf::Texture();
+        texture->loadFromFile(RES(fnames[i]));
+        textures.push_back(texture);
+    }
+
+    for (vector<sf::Texture *>::iterator it = textures.begin(); it != textures.end(); it++) {
+        sf::Sprite sprite;
+        sf::Texture * t = (*it);
+        sprite.setTexture(*t);
+        window.draw(sprite);
+        window.display();
+        window.clear();
+        usleep(sleepTime);
+    }
+}
+
 void Game::newLevel()
 {
+    clock.restart();
     world.united = false;
     if (level++ > 0)
         world.unload();
     string s("level0.dat");
     s[5] = '0' + level;
     world.load(RES(s));
+}
+
+void Game::loadIntroSound()
+{
+    introSound = new sf::Music();
+    if (!introSound->openFromFile(RES("ingame chuva.ogg")))
+        exit(EXIT_FAILURE);
+    introSound->setLoop(false);
+    introSound->setVolume(100);
+    introSound->play();
 }
 
