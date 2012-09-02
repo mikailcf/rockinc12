@@ -279,14 +279,17 @@ void World::updateScene(int delta_t)
             // for (vector<Box>::iterator ito = boxes.begin(); ito != boxes.end(); ito++)
             //     ito->collide(&(*it));
         }
+        int collided = 0;
         for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++)
-            (*it).collide(&player[i]);
+            collided += (*it).collide(&player[i]);
         for (vector<Box>::iterator it = boxes.begin(); it != boxes.end(); it++)
-            it->collide(&player[i]);
+            collided += it->collide(&player[i]);
         for (vector<Trap>::iterator it = traps.begin(); it != traps.end(); it++)
             it->check(&player[i]);
         for (vector<Checkpoint>::iterator it = checkpoints.begin(); it != checkpoints.end(); it++)
             it->check(&player[i]);
+
+        if (collided) player[i].unstuck();
     }
 }
 

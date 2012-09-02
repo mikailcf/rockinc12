@@ -1,30 +1,32 @@
+3
+plano1_1.png
+plano1_2.png
+plano1_3.png
 1
-cute_image.jpg
-1
-nice_music.ogg
+ingame_noite.ogg
 220 1300 sheet.png
 5441 900 sheet.png
 5
-373 1355 65 65 caixa.png
-1511 789 65 65 caixa.png
-3512 973 65 65 caixa.png
-5538 994 65 65 caixa.png
-5168 1081 65 65 caixa.png
+373 1355 65 65 caixa_spritesheet.png
+1511 789 65 65 caixa_spritesheet.png
+3512 973 65 65 caixa_spritesheet.png
+5538 994 65 65 caixa_spritesheet.png
+5168 1081 65 65 caixa_spritesheet.png
 14
-460 387 128 24 hori block.png
-589 268 128 24 hori block.png
-834 268 128 24 hori block.png
-984 976 128 24 hori block.png
-984 1213 128 24 hori block.png
-1232 1094 128 24 hori block.png
-1434 621 128 24 hori block.png
-3337 681 128 24 hori block.png
-3477 561 128 24 hori block.png
-3349 444 128 24 hori block.png
-4358 726 128 24 hori block.png
-4022 845 128 24 hori block.png
-4892 371 128 24 hori block.png
-5302 371 128 24 hori block.png
+460 387 132 27 hori plataforma.png
+589 268 132 27 hori plataforma.png
+834 268 132 27 hori plataforma.png
+984 976 132 27 hori plataforma.png
+984 1213 132 27 hori plataforma.png
+1232 1094 132 27 hori plataforma.png
+1434 621 132 27 hori plataforma.png
+3337 681 132 27 hori plataforma.png
+3477 561 132 27 hori plataforma.png
+3349 444 132 27 hori plataforma.png
+4358 726 132 27 hori plataforma.png
+4022 845 132 27 hori plataforma.png
+4892 371 132 27 hori plataforma.png
+5302 371 132 27 hori plataforma.png
 43
 239 0 221 482
 239 480 37 163
