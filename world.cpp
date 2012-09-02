@@ -124,6 +124,9 @@ void World::draw(sf::RenderWindow &window, int delta_t)
     for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
         it->draw(&window);
     }
+    for (vector<Box>::iterator it = boxes.begin(); it != boxes.end(); it++) {
+        it->draw(&window);
+    }
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
         
     }
