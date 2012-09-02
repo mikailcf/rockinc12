@@ -102,6 +102,74 @@ int Block::collide(Player *player){
     return 1;
 }
 
+int Block::collide(Player *player){
+    float top    = block.getGlobalBounds().top;
+    float bottom = block.getGlobalBounds().top + block.getGlobalBounds().height;
+    float left   = block.getGlobalBounds().left;
+    float right  = block.getGlobalBounds().left + block.getGlobalBounds().width;
+    float top_player    = player->top;
+    float bottom_player = player->top + player->height;
+    float left_player   = player->left;
+    float right_player  = player->left + player->width;
+    float max_top;
+    float min_bottom;
+    float max_left;
+    float min_right;
+
+    if(top > bottom_player){
+        attached = NULL;
+        return 0;
+    }
+    if(bottom < top_player){
+        attached = NULL;
+        return 0;
+    }
+
+    if(right < left_player){
+        attached = NULL;
+        return 0;
+    }
+    if(left > right_player){
+        attached = NULL;
+        return 0;
+    }
+
+    max_top = top > top_player ? top : top_player;
+    min_bottom = bottom < bottom_player ? bottom : bottom_player;
+    max_left = left > left_player ? left : left_player;
+    min_right = right < right_player ? right : right_player;
+
+    if(min_right - max_left > min_bottom - max_top){
+        if(top_player < top){                          // veio de cima
+            if(player->stuck.y == 0) player->stuck.y = 1;
+            player->spd.y = 0.0;
+            player->move(0.0, -min_bottom + max_top);
+            attached = player;
+            player->can_jump = 1;
+            player->jumping = 0;
+
+        }
+        else{                                           // veio de baixo
+            if(player->stuck.y == 0) player->stuck.y = -1;
+            player->spd.y = 0.0;
+            player->move(0.0, min_bottom - max_top + 1);
+
+        }
+    }
+    else{
+        if(left_player < left){                           // veio da esquerda
+            if(player->stuck.x == 0) player->stuck.x = 1;
+            player->move(-min_right + max_left, 0.0);
+        }
+        else if(player->spd.x < 0.0) {                     // veio da direita
+            if(player->stuck.x == 0) player->stuck.x = -1;
+            player->move(min_right - max_left, 0.0);
+        }
+    }
+
+    return 1;
+}
+
 void Block::move(float offsetX, float offsetY){
     if(attached != NULL) attached->move(offsetX, offsetY + 0.1);
     block.move(offsetX, offsetY);

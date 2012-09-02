@@ -129,7 +129,7 @@ void World::draw(sf::RenderWindow &window, int delta_t)
         it->draw(&window);
     }
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
-        
+        it->draw(&window);
     }
     for (int i = 0; i < 2; i++) {
         player[i].animate(delta_t);
@@ -203,6 +203,11 @@ void World::updateScene(int delta_t)
     for (int i = 0; i < 2; i++) {
         player[i].accel(delta_t, GRAVITY);
         player[i].move(delta_t);
+
+        for (vector<Item>::iterator it = items.begin(); it != items.end(); it++){
+            it->accel(delta_t, GRAVITY);
+            it->move(delta_t);
+        }
         for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++)
             it->collide(&player[i]);
         for (vector<Box>::iterator it = boxes.begin(); it != boxes.end(); it++)

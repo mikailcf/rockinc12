@@ -2,6 +2,7 @@
 #include "defs.hpp"
 #include "player.hpp"
 #include "animation.hpp"
+#include "item.hpp"
 
 #ifndef BLOCK_HPP
 #define BLOCK_HPP
@@ -24,6 +25,7 @@ public:
     void init_animation(float time);
 
     int collide(Player *player);
+    int collide(Item *item);
     void move(float offsetX, float offsetY);
     void moveAnimate(float time);
     void updateCenter();
