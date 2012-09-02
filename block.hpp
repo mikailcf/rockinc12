@@ -18,17 +18,18 @@ class Block{
     sf::View *view;
     Animation *animation;
     bool animate;
+    sf::Clock clock;
 
 public:
     Block();
-    Block(sf::Vector2f origin, sf::Vector2f size, bool anim, string);
+    Block(sf::Vector2f origin, sf::Vector2f size, string, string);
 
-    void init_animation(float time);
+    void init_animation();
 
     int collide(Player *player);
     int collide(Item *item);
     void move(float offsetX, float offsetY);
-    void moveAnimate(float time);
+    void moveAnimate();
     void updateCenter();
     void draw(sf::RenderWindow *window);
 };

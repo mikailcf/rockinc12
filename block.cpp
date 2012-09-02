@@ -1,7 +1,7 @@
 #include <SFML/OpenGL.hpp>
 #include "block.hpp"
 
-Block::Block(sf::Vector2f origin, sf::Vector2f size, bool anim, std::string filename){
+Block::Block(sf::Vector2f origin, sf::Vector2f size, std::string animType, std::string filename){
     block.setPointCount(4);
 
     block.setPoint(0, sf::Vector2f(-size.x/2.0, -size.y/2.0));
@@ -10,7 +10,9 @@ Block::Block(sf::Vector2f origin, sf::Vector2f size, bool anim, std::string file
     block.setPoint(3, sf::Vector2f(-size.x/2.0, size.y/2.0));
 
     tex.loadFromFile(filename);
-    
+    sprite.setTexture(tex);
+   
+    sprite.move(origin);
     block.move(origin + sf::Vector2f(size.x/2.0, size.y/2.0));
     initial_center = origin;
 
@@ -21,17 +23,28 @@ Block::Block(sf::Vector2f origin, sf::Vector2f size, bool anim, std::string file
     attached_item = NULL;
     animate = anim;
 
-    if(anim){
-        animation = new Animation(4);
-        animation->setSection(0, 2.0, 1.0, 0.0, sf::Vector2f(500.0, 100.0), 0.2, 0.8);
-        animation->setSection(1, 1.4, 1.0, 0.0, sf::Vector2f(100.0, -200.0), 0.2, 0.8);
-        animation->setSection(2, 1.4, 1.0, 0.0, sf::Vector2f(-100.0, 200.0), 0.2, 0.8);
-        animation->setSection(3, 2.0, 1.0, 0.0, sf::Vector2f(-500.0, -100.0), 0.2, 0.8);
+    float dist = 400;
+
+    if(animType == "hori") {
+        animate = true;
+        animation = new Animation(2);
+        animation->setSection(0, 2.0, 1.0, 0.0, sf::Vector2f(dist, 0.0), 0.2, 0.8);
+        animation->setSection(1, 2.0, 1.0, 0.0, sf::Vector2f(-dist, 0.0), 0.2, 0.8);
         animation->setLoop(true);
+        init_animation();
+    }
+    else if (animType == "vert") {
+        animate = true;
+        animation = new Animation(2);
+        animation->setSection(0, 2.0, 1.0, 0.0, sf::Vector2f(0.0, dist), 0.2, 0.8);
+        animation->setSection(1, 2.0, 1.0, 0.0, sf::Vector2f(0.0, -dist), 0.2, 0.8);
+        animation->setLoop(true);
+        init_animation();
     }
 }
 
-void Block::init_animation(float time){
+void Block::init_animation(){
+    float time = clock.getElapsedTime().asSeconds();
     animation->start(time);
 }
 
@@ -173,9 +186,13 @@ void Block::move(float offsetX, float offsetY){
     if(attached_item != NULL) attached_item->move(offsetX, offsetY + 0.1);
     block.move(offsetX, offsetY);
     this->updateCenter();
+    sprite.move(offsetX, offsetY);
 }
 
-void Block::moveAnimate(float time){
+void Block::moveAnimate(){
+    float time = clock.getElapsedTime().asSeconds();
+    //cout << time << endl;
+    //cout << animation->getPosition(time).x << " " << initial_center.x - block.getGlobalBounds().left << " " << animation->getPosition(time).y << " " << initial_center.y - block.getGlobalBounds().top << endl;
     move(animation->getPosition(time).x + initial_center.x - block.getGlobalBounds().left,
          animation->getPosition(time).y + initial_center.y - block.getGlobalBounds().top);
 }
@@ -186,7 +203,10 @@ void Block::updateCenter(){
 }
 
 void Block::draw(sf::RenderWindow *window){
+    this->updateCenter();
     sprite.setTexture(tex);
+    //sprite.setOrigin(block.getGlobalBounds().left, block.getGlobalBounds().top);
+    //cout << sprite.getGlobalBounds().left << " " << sprite.getGlobalBounds().top  << endl;
     window->draw(sprite);
 }
 

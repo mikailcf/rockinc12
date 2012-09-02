@@ -65,9 +65,11 @@ void World::loadBlocks(FILE* file)
     fscanf(file, "%d", &n);
     while (n--) {
         char filename[MAX_NAME];
+        char animType[MAX_NAME]; //hori, vert, none
         float ox, oy, sx, sy;
-        fscanf(file, "%f %f %f %f %s", &ox, &oy, &sx, &sy, filename);
-        blocks.push_back(Block(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy), false, RES(string(filename))));
+        fscanf(file, "%f %f %f %f %s %s", &ox, &oy, &sx, &sy, animType, filename);
+        printf( "%f %f %f %f %s %s\n", ox, oy, sx, sy, animType, filename);
+        blocks.push_back(Block(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy), animType, RES(string(filename))));
     }
 }
 
@@ -227,6 +229,10 @@ void World::unload()
 
 void World::updateScene(int delta_t)
 {
+    for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++) {
+        //(*it).move(0,-1);
+        it->moveAnimate();
+    }
     for (int i = 0; i < 2; i++) {
         player[i].accel(delta_t, GRAVITY);
         player[i].move(delta_t);
@@ -241,7 +247,7 @@ void World::updateScene(int delta_t)
                 ito->collide(&(*it));
         }
         for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++)
-            it->collide(&player[i]);
+            (*it).collide(&player[i]);
         for (vector<Box>::iterator it = boxes.begin(); it != boxes.end(); it++)
             it->collide(&player[i]);
         for (vector<Trap>::iterator it = traps.begin(); it != traps.end(); it++)
