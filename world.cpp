@@ -15,7 +15,6 @@ void comment(FILE *file){
 
 World::World()
 {
-    podeTerminar = !false;
 }
 
 void World::loadBackground(FILE* file)
@@ -90,7 +89,7 @@ void World::loadCheckpoints(FILE* file)
     while (n--) {
         float ox, oy, sx, sy;
         fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
-        checkpoints.push_back(Checkpoint(checkpoints.size(), Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy))));
+        checkpoints.push_back(Checkpoint(checkpoints.size(), Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy)), false));
     }
 }
 
@@ -99,9 +98,23 @@ void World::loadTraps(FILE* file)
     int n = 0;
     fscanf(file, "%d", &n);
     while (n--) {
+        int frames;
+        char filename[MAX_NAME];
         float ox, oy, sx, sy;
-        fscanf(file, "%f %f %f %f", &ox, &oy, &sx, &sy);
-        traps.push_back(Trap(Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy))));
+        fscanf(file, "%f %f %f %f %s %d", &ox, &oy, &sx, &sy, filename, &frames);
+        traps.push_back(Trap(Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy)), RES(string(filename)), frames));
+    }
+}
+
+void World::loadTeleports(FILE* file)
+{
+    int n = 0;
+    fscanf(file, "%d", &n);
+    while (n--) {
+        char filename[MAX_NAME];
+        float ox, oy, sx, sy;
+        fscanf(file, "%f %f %f %f %s", &ox, &oy, &sx, &sy, filename);
+        teleports.push_back(Teleport(Box(sf::Vector2f(ox, oy), sf::Vector2f(sx, sy)), RES(string(filename))));
     }
 }
 
@@ -111,8 +124,8 @@ void World::loadPlayers(FILE* file)
         char filename[MAX_NAME];
         float x, y;
         fscanf(file, "%f %f %s", &x, &y, filename);
-        player[i] = Player(x, y, RES(string(filename)));
-        checkpoints.push_back(Checkpoint(checkpoints.size(), Box(sf::Vector2f(x, y), sf::Vector2f(20, 20))));
+        player[i] = Player(x, y, RES(string(filename)), this);
+        checkpoints.push_back(Checkpoint(checkpoints.size(), Box(sf::Vector2f(x, y), sf::Vector2f(20, 20)), true));
     }
 }
 
@@ -122,6 +135,7 @@ void World::load(string filename)
     if (level_file == NULL)
         exit(EXIT_FAILURE);
 
+    podeTerminar = false;
     loadBackground(level_file);
     loadSoundtrack(level_file);
     loadPlayers(level_file);
@@ -130,6 +144,7 @@ void World::load(string filename)
     loadBoxes(level_file);
     loadCheckpoints(level_file);
     loadTraps(level_file);
+    loadTeleports(level_file);
 
     fclose(level_file);
 }
@@ -154,6 +169,13 @@ void World::draw(sf::RenderWindow &window, int delta_t)
         it->draw(&window);
     }
     for (vector<Item>::iterator it = items.begin(); it != items.end(); it++) {
+        it->draw(&window);
+    }
+    for (vector<Teleport>::iterator it = teleports.begin(); it != teleports.end(); it++) {
+        it->draw(&window);
+    }
+    for (vector<Trap>::iterator it = traps.begin(); it != traps.end(); it++) {
+        it->animate(delta_t);
         it->draw(&window);
     }
     for (int i = 0; i < 2; i++) {
@@ -223,6 +245,7 @@ void World::unload()
     background.clear();
     traps.clear();
     checkpoints.clear();
+    teleports.clear();
 }
 
 void World::updateScene(int delta_t)
@@ -246,13 +269,34 @@ void World::updateScene(int delta_t)
             it->collide(&player[i]);
         for (vector<Trap>::iterator it = traps.begin(); it != traps.end(); it++)
             it->check(&player[i]);
-        for (vector<Checkpoint>::iterator it = checkpoints.begin(); it != checkpoints.end(); it++)
+        podeTerminar = true;
+        for (vector<Checkpoint>::iterator it = checkpoints.begin(); it != checkpoints.end(); it++) {
+            podeTerminar &= it->getVisited();
             it->check(&player[i]);
+        }
+        for (vector<Teleport>::iterator it = teleports.begin(); it != teleports.end(); it++) {
+            it->check(&player[i]);
+        }
     }
 }
 
 sf::Vector2f World::getCenter(int i)
 {
     return sf::Vector2f(player[i].pos.x, RES_Y/2);
+}
+
+bool World::switch_players()
+{
+    for (int i = 0; i < 2; i++) {
+        if (player[i].teleporting < 2) return false;
+        player[i].stop();   
+    }
+    swap(player[0].pos, player[1].pos);
+    for (int i = 0; i < 2; i++) {
+        player[i].teleporting = 0;
+        for (vector<Teleport>::iterator it = teleports.begin(); it != teleports.end(); it++)
+            it->leave();
+    }
+    return true;
 }
 

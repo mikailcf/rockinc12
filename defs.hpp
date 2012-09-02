@@ -42,6 +42,7 @@
 
 #define MAX_NAME 30
 #define TITLE "Game"
+#define FPS 24
 
 #if defined(__APPLE__) || defined(MACOSX)
 #include "ResourcePath.hpp"
@@ -52,13 +53,13 @@
 
 enum STATE{
     GAME,
-    MENU,
+    MENU
 };
 
 enum PLAYER_STATE{
     STAND,
     WALK,
-    CLIMB,
+    CLIMB
 };
 
 using namespace std;

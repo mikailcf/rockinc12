@@ -1,13 +1,12 @@
 
 #include "trap.hpp"
 
-Trap::Trap()
+Trap::Trap() : Trigger()
 {
 }
 
-Trap::Trap(Box box)
+Trap::Trap(Box box, string filename, int frames) : Trigger(box, filename, frames)
 {
-    this->box = box;
 }
 
 void Trap::action(Player *player)

@@ -2,13 +2,15 @@
 cute_image.jpg
 1
 nice_music.ogg
-10.0 400.0 sheet.png
-900.0 500.0 sheet.png
+101.0 400.0 sheet.png
+700.0 400.0 sheet.png
 1
 100.0 80.0 10.0 20.0 stair.png
 0
 1
 -1000 600 2000 1000
 0
-1
-100 500 150 640
+0
+2
+0 500 100 640 stair.png
+800 500 900 640 stair.png

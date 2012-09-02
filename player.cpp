@@ -6,13 +6,13 @@
 Player::Player(){
     item = NULL;
     move_state = 0;
-};
+}
 
-Player::Player(float x, float y, std::string filename){
+Player::Player(float x, float y, std::string filename, World* world){
     tex.loadFromFile(filename);
     animation_t = jump_t = 0;
     state = STAND;
-    move_state = 0;
+    last_move_state = move_state = 0;
     sprite.move(x, y);
 
     pos.x = x;
@@ -22,6 +22,7 @@ Player::Player(float x, float y, std::string filename){
     item = NULL;
     move_state = 0;
 
+    this->world = world;
     // pos.x = 0;
     // pos.y = 15;
 
@@ -44,11 +45,12 @@ Player::Player(float x, float y, std::string filename){
     stuck.x = stuck.y = 0;
     can_jump = 0;
     jumping = 0;
+
     left = sprite.getGlobalBounds().left;
     top = sprite.getGlobalBounds().top;
     width = 50;
     height = 50;
-};
+}
 
 Player::Player(float x, float y){
     item = NULL;
@@ -181,7 +183,11 @@ void Player::jump(int delta_t){
 }
 
 void Player::processInput(const string key, bool keyPressed) {
+    if (!move_state) last_move_state = move_state;
     if (key == "up") {
+        teleporting += keyPressed ? 1 : -1;
+        if (teleporting < 0)
+            teleporting = 0;
     }
     else if (key == "down") {
     }
@@ -204,6 +210,7 @@ void Player::processInput(const string key, bool keyPressed) {
 
 void Player::stop()
 {
+    if (!move_state) last_move_state = move_state;
     move_state = 0;
 }
 
