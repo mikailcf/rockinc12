@@ -13,9 +13,6 @@ Player::Player(float x, float y, std::string filename){
     move_state = 0;
     sprite.move(x, y);
 
-    pos.x = x;
-    pos.y = y;
-
     item = NULL;
     move_state = 0;
 

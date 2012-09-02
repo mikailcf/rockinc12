@@ -112,6 +112,59 @@ int Box::collide(Player *player){
     return 1;
 }
 
+int Box::collide(Item *item){
+    float top    = box.getGlobalBounds().top;
+    float bottom = box.getGlobalBounds().top + box.getGlobalBounds().height;
+    float left   = box.getGlobalBounds().left;
+    float right  = box.getGlobalBounds().left + box.getGlobalBounds().width;
+    float top_item    = item->top;
+    float bottom_item = item->top + item->height;
+    float left_item   = item->left;
+    float right_item  = item->left + item->width;
+
+    float max_top;
+    float min_bottom;
+    float max_left;
+    float min_right;
+
+    if(top > bottom_item) return 0;
+    if(bottom < bottom_item) return 0;
+
+    if(right < left_item) return 0;
+    if(left > right_item) return 0;
+
+    // item
+    max_top = top > top_item ? top : top_item;
+    min_bottom = bottom < bottom_item ? bottom : bottom_item;
+    max_left = left > left_item ? left : left_item;
+    min_right = right < right_item ? right : right_item;
+
+    if(min_right - max_left > min_bottom - max_top){
+        if(top_item < top){                          // veio de cima
+            if(item->stuck.y == 0) item->stuck.y = 1;
+            item->spd.y = 0.0;
+            item->move(0.0, -min_bottom + max_top);
+        }
+        else{                                           // veio de baixo
+            if(item->stuck.y == 0) item->stuck.y = -1;
+            item->spd.y = 0.0;
+            item->move(0.0, min_bottom - max_top + 1);
+        }
+    }
+    else{
+        if(left_item < left){                           // veio da esquerda
+            if(item->stuck.x == 0) item->stuck.x = 1;
+            item->move(-min_right + max_left, 0.0);
+        }
+        else if(item->spd.x < 0.0) {                     // veio da direita
+            if(item->stuck.x == 0) item->stuck.x = -1;
+            item->move(min_right - max_left, 0.0);
+        }
+    }
+
+    return 1;
+}
+
 void Box::move(float offsetX, float offsetY){
     // if(attached != NULL) attached->move(offsetX, offsetY + 0.1);
     box.move(offsetX, offsetY);

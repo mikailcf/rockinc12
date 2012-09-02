@@ -207,6 +207,11 @@ void World::updateScene(int delta_t)
         for (vector<Item>::iterator it = items.begin(); it != items.end(); it++){
             it->accel(delta_t, GRAVITY);
             it->move(delta_t);
+
+            for (vector<Block>::iterator ito = blocks.begin(); ito != blocks.end(); ito++)
+                ito->collide(&(*it));
+            for (vector<Box>::iterator ito = boxes.begin(); ito != boxes.end(); ito++)
+                ito->collide(&(*it));
         }
         for (vector<Block>::iterator it = blocks.begin(); it != blocks.end(); it++)
             it->collide(&player[i]);

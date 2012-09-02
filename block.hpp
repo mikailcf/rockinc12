@@ -13,7 +13,8 @@ class Block{
     sf::Texture tex;
     sf::Sprite sprite;
     int relative_position;
-    Player *attached;
+    Player *attached_player;
+    Item *attached_item;
     sf::View *view;
     Animation *animation;
     bool animate;
