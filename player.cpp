@@ -6,13 +6,13 @@
 Player::Player(){
     item = NULL;
     move_state = 0;
-};
+}
 
-Player::Player(float x, float y, std::string filename){
+Player::Player(float x, float y, std::string filename, World* world){
     tex.loadFromFile(filename);
     animation_t = jump_t = 0;
     state = STAND;
-    move_state = 0;
+    last_move_state = move_state = 0;
     sprite.move(x, y);
 
     pos.x = x;
@@ -22,6 +22,7 @@ Player::Player(float x, float y, std::string filename){
     item = NULL;
     move_state = 0;
 
+    this->world = world;
     // pos.x = 0;
     // pos.y = 15;
 
@@ -44,45 +45,13 @@ Player::Player(float x, float y, std::string filename){
     stuck.x = stuck.y = 0;
     can_jump = 0;
     jumping = 0;
+
     left = sprite.getGlobalBounds().left;
     top = sprite.getGlobalBounds().top;
     width = 50;
     height = 50;
+}
 
-    // animate(0);
-};
-
-// Player::Player(float x, float y){
-//     item = NULL;
-//     move_state = 0;
-
-//     pos.x = 0;
-//     pos.y = 15;
-
-//     triangle.setPointCount(3);
-//     triangle.setPoint(0, sf::Vector2f(pos.x, -(45 - pos.y)));
-//     triangle.setPoint(1, sf::Vector2f(pos.x - 25, pos.y));
-//     triangle.setPoint(2, sf::Vector2f(pos.x + 25, pos.y));
-//     triangle.setOutlineColor(sf::Color::White);
-//     triangle.setOutlineThickness(2.0);
-//     triangle.setFillColor(sf::Color(255, 255, 255, 50));
-
-//     triangle.move(x, y);
-//     pos.x = x;
-//     pos.y = y;
-
-//     animation_t = jump_t = 0;
-//     angle = target_angle = 0.0;
-//     turn_spd = 0.0;
-//     spd.x = spd.y = 0.0;
-//     stuck.x = stuck.y = 0;
-//     can_jump = 0;
-//     jumping = 0;
-//     left = triangle.getGlobalBounds().left + 3.0;
-//     top = triangle.getGlobalBounds().top;
-//     width = triangle.getGlobalBounds().width - 5.0;
-//     height = triangle.getGlobalBounds().height;
-// }
 
 void Player::draw(sf::RenderWindow *window){
     sprite.setTexture(tex);
@@ -204,7 +173,11 @@ int Player::collide_item(Item *item){
 }
 
 void Player::processInput(const string key, bool keyPressed) {
+    if (!move_state) last_move_state = move_state;
     if (key == "up") {
+        teleporting += keyPressed ? 1 : -1;
+        if (teleporting < 0)
+            teleporting = 0;
     }
     else if (key == "down") {
     }
@@ -227,6 +200,7 @@ void Player::processInput(const string key, bool keyPressed) {
 
 void Player::stop()
 {
+    if (!move_state) last_move_state = move_state;
     move_state = 0;
 }
 

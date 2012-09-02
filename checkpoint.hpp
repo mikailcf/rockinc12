@@ -10,11 +10,14 @@ class Checkpoint : public Trigger
 {
 private:
     int id;
+    bool visited;
 public:
     Checkpoint();
-    Checkpoint(int, Box);
+    Checkpoint(int, Box, bool);
     void action(Player*);
     sf::Vector2f getPosition();
+    void visit();
+    bool getVisited();
 };
 
 #endif

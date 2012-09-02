@@ -9,10 +9,13 @@
 class Teleport : public Trigger
 {
 private:
+    bool occupied;
 public:
     Teleport();
-    Teleport(Box);
+    Teleport(Box, string);
     void action(Player*);
+    void actionAlternate(Player*);
+    void leave();
 };
 
 #endif

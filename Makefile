@@ -1,6 +1,6 @@
 
 CXX = g++
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -g -pedantic
 
 LIBS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 

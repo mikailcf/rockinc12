@@ -5,6 +5,7 @@
 #include "item.hpp"
 #include "checkpoint.hpp"
 #include "trap.hpp"
+#include "teleport.hpp"
 
 #include "box.hpp"
 
@@ -23,6 +24,7 @@ private:
     vector<sf::Texture> background;
     vector<Checkpoint> checkpoints;
     vector<Trap> traps;
+    vector<Teleport> teleports;
 
 public:
     bool podeTerminar;
@@ -37,12 +39,14 @@ public:
     void loadItems(FILE*);
     void loadCheckpoints(FILE*);
     void loadTraps(FILE*);
+    void loadTeleports(FILE*);
     void unload();
     void processInput(sf::Keyboard::Key keyCode, bool keyPressed);
     void jumping(int delta_t, int player_num);
     void updateScene(int delta_t);
     void drawBackground(sf::RenderWindow&, int);
     void draw(sf::RenderWindow&, int);
+    bool switch_players();
     sf::Vector2f getCenter(int i);
 };
 

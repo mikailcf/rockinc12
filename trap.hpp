@@ -11,7 +11,7 @@ class Trap : public Trigger
 private:
 public:
     Trap();
-    Trap(Box);
+    Trap(Box, string, int);
     void action(Player*);
 };
 
