@@ -292,6 +292,6 @@ void World::updateScene(int delta_t)
 
 sf::Vector2f World::getCenter(int i)
 {
-    return sf::Vector2f(player[i].pos.x, RES_Y/2);
+    return sf::Vector2f(player[i].pos.x, player[i].pos.y);
 }
 
