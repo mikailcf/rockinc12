@@ -19,8 +19,8 @@ private:
     sf::Clock clock;
     int current_t, delta_t, last_t;
     void gameInit();
-    void slideShow();
-    void loadIntroSound();
+    void slideShow(vector<string> fnames, vector<int> times);
+    void loadSound(const string name);
 public:
     Game();
     void processEvents();
@@ -28,8 +28,9 @@ public:
     bool isRunning();
     void run();
     void newLevel();
+    bool gameover;
 
-    sf::Music * introSound;
+    sf::Music * sound;
 };
 
 #endif
