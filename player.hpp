@@ -42,5 +42,7 @@ public:
     void jump(int delta_t);
     
     void processInput(const string key, bool keyPressed);
+    void stop();
+    int getMovestate();
 };
 #endif

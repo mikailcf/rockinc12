@@ -196,3 +196,14 @@ void Player::processInput(const string key, bool keyPressed) {
     {
     }
 }
+
+void Player::stop()
+{
+    move_state = 0;
+}
+
+int Player::getMovestate()
+{
+    return move_state;
+}
+
